@@ -1,9 +1,55 @@
 import React from 'react'
-import './header.css'
+import '../layout.css'
+import { Link } from 'react-router-dom'
+import { IoPersonOutline } from "react-icons/io5";
+import { FiHeart, FiShoppingCart  } from "react-icons/fi";
+import { CiShoppingBasket } from "react-icons/ci";
+
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 function Header() {
   return (
-    <div>Header usando react router</div>
+      <header>
+        <div className='header__logo'>
+          <CiShoppingBasket  className='icon'/>
+          <span>Fresh<br/> <small>Market</small></span>
+        </div>
+        <div className='header__searchbar'>
+        <InputGroup className="mb-1">
+        <DropdownButton
+          variant="outline-secondary"
+          title="Categorías"
+          id="input-group-dropdown-1"
+        >
+          <Dropdown.Item href="#">Frutas</Dropdown.Item>
+          <Dropdown.Item href="#">Vegetales</Dropdown.Item>
+          <Dropdown.Item href="#">Lácteos</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Carnes</Dropdown.Item>
+          <Dropdown.Item href="#">Abarrotes</Dropdown.Item>
+        </DropdownButton>
+        <Form.Control aria-label="Text input with dropdown button" className='input'/>
+      </InputGroup>
+        </div>
+        <nav className='nav'>
+        <div className='nav__phone'>
+          <span>809 123 4567</span>
+          <small>Atención 24/7</small>
+        </div>
+          <ul>
+            <li><Link to='/'><IoPersonOutline className='ul__icon'/></Link></li>
+            <li><Link to='/'><FiHeart className='ul__icon'/></Link></li>
+            <li><Link to='/cart'><FiShoppingCart className='ul__icon'/></Link></li>
+          </ul>
+          <div className='nav__cart'>
+            <small>Mi Carrito</small>
+            <span>$2,000.00</span> 
+          </div>
+        </nav>
+      </header>
   )
 }
 
