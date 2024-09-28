@@ -1,0 +1,49 @@
+/* Estilo para los botones de control del carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  border-radius: 50%; /* Botones redondeados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 30px;
+  height: 30px;
+  background-color: white; /* Cambia el color del ícono */
+  border-radius: 50%;
+}
+
+/* Cambiar color del ícono al hacer hover */
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+  background-color: #ff0000; /* Cambia a rojo, por ejemplo, al pasar el ratón */
+}
+
+/* Estilo para la flecha del icono */
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.35em 0.35em 0 0;
+  display: inline-block;
+  height: 1.5em;
+  left: 0.15em;
+  position: relative;
+  top: -0.15em;
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 1.5em;
+}
+
+.carousel-control-prev-icon::before {
+  transform: rotate(45deg); /* Cambia la dirección de la flecha del botón previo */
+}
+
+.carousel-control-next-icon::before {
+  transform: rotate(-45deg); /* Cambia la dirección de la flecha del botón siguiente */
+}
