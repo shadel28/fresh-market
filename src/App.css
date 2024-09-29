@@ -81,6 +81,8 @@ pre {
 
 a {
   background-color: transparent;
+  font-style: none;
+  text-decoration: none;
 }
 
 /**
@@ -357,6 +359,7 @@ template {
 li {
   text-decoration: none;
   list-style: none;
+  font-style: none;
 }
 
 .App{

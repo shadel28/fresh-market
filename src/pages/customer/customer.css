@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* CART
+   ========================================================================== */
+
+.cart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* background-color: black; */
+    /* gap: 45px; */
+    font-family: "Poppins", system-ui;
+    padding: 4rem;
+    margin-top: 6rem;
+}
+
+.row{
+    width: 60%;
+}
+
+.cart .row:nth-child(2){
+    width: 35%;
+}
+
+.cart__info{
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.cart .row .cart__info div{
+    /* background-color: aqua; */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cart__info--icon {
+    font-size: 1.8rem;
+    color: #E6B44A;
+}
+
+.cart .row .cart__info div h1 {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.cart .row .cart__info div h1,
+.cart__info span{
+    font-weight: 700;
+}
+
+.cart__products--titles {
+    /* background-color: purple; */
+    display: flex;
+    /* align-items: flex-end; */
+    justify-content: space-between;
+    /* gap: 15rem; */
+    width: 100%;
+    font-size: .8rem;
+    padding: 1.6rem 0.3rem;
+    color: #d2cfcf;
+    font-weight: 600;
+}
+.detalle{
+    width: 57%;
+    /* background-color: red; */
+}
+
+.info {
+    /* width: 60%; */
+    display: flex;
+    justify-content: center;
+    /* background-color: antiquewhite; */
+    align-items: flex-end;
+    gap: 35px;
+    width: 45%;
+}
+
+.row .shop-btn {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    /* padding: 1px 0.2px; */
+    width: 35%;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #E6B44A;
+    font-weight: 600;
+}
+
+.row .shop-btn .shop-btn__icon{
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.row .shop-btn:hover{
+    color: #a57419;
+}
+
+.payment {
+    display: flex;
+    align-items: flex-start;
+    /* justify-content: center; */
+    flex-direction: column;
+    /* text-align: left; */
+}
+
+.payment span{
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.row form{
+    text-align: left;
+    padding: 1.5rem;
+}
+
+.form__label{
+    font-weight: 600;
+    font-size: .8rem;
+}
+
+.row form input{
+    margin-bottom: 1rem;
+    border-color: #d2cfcf;
+}
+
+.totals {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.totals_row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.totals .totals_row:nth-child(3){
+    font-weight: 600;
+}
+
+.cart .row:nth-child(2) button{
+    outline: none;
+    border: 1px solid #E6B44A;
+    border-radius: 5px;
+    background-color: #E6B44A;
+    /* font-size: 1.1rem; */
+    color: #F7F7F7;
+    font-weight: 600;
+    padding: .4rem 0;
+    margin-bottom: 1.4rem;
+    transition: all 0.2s ease-in;
+}
+
+.cart .row:nth-child(2) button:hover{
+    border: 1px solid #F2C36B;
+    background-color: #F2C36B;
+}
+
+#pagos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: .7rem;
+    font-weight: 400;
+    color: #d2cfcf;
+}
+

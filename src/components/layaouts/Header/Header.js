@@ -21,7 +21,7 @@ function Header() {
         <InputGroup className="mb-1">
         <DropdownButton
           variant="outline-secondary"
-          title="Categorías"
+          title="CATEGORÍAS"
           id="input-group-dropdown-1"
         >
           <Dropdown.Item href="#">Frutas</Dropdown.Item>
@@ -40,9 +40,24 @@ function Header() {
           <small>Atención 24/7</small>
         </div>
           <ul>
-            <li><Link to='/'><IoPersonOutline className='ul__icon'/></Link></li>
-            <li><Link to='/'><FiHeart className='ul__icon'/></Link></li>
-            <li><Link to='/cart'><FiShoppingCart className='ul__icon'/></Link></li>
+            <li>
+              <Link to='/'>
+              {/* <div className='ul__badge'>+9</div> */}
+              <IoPersonOutline className='ul__icon'/>
+              </Link>
+            </li>
+            <li>
+              <Link to='/'>
+              <div className='ul__badge'>+9</div>
+              <FiHeart className='ul__icon'/>
+              </Link>
+              </li>
+            <li>
+              <Link to='/cart'>
+              <div className='ul__badge'>+10</div>
+              <FiShoppingCart className='ul__icon'/>
+              </Link>
+              </li>
           </ul>
           <div className='nav__cart'>
             <small>Mi Carrito</small>
