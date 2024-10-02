@@ -1,11 +1,11 @@
 import React from "react";
 import PromotionalBanners from "../../components/PromotionalBanner/PromotionalBanners";
-// import PromotionalBanners from './PromotionalBanners';
 import Filters from '../../components/Filters/Filters';
 import ProductList from "../../components/ProductsList/ProductList"; 
 import Footer from "../../components/layaouts/Footer/Footer/Footer";
 import Header from '../../components/layaouts/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./customer.css"
 
 function Products(){
 

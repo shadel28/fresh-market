@@ -8,6 +8,7 @@ import { TbArrowNarrowLeft } from "react-icons/tb";
 import Form from 'react-bootstrap/Form';
 import { IoIosLock } from "react-icons/io";
 import InputGroup from 'react-bootstrap/InputGroup';
+import Footer from "../../components/layaouts/Footer/Footer/Footer";
 
 
 
@@ -92,6 +93,7 @@ function Cart() {
               Los pagos son securos y encriptados
             </Form.Text>
           </div>
+          <Footer/>
         </section>
     </>
   )
