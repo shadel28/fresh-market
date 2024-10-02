@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import './MiCarrusel.css';
+import './PromotionalBanner.css';
 
 function PromotionalBanners() {
   return (
