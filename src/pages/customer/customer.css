@@ -8,8 +8,6 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* background-color: black; */
-    /* gap: 45px; */
     font-family: "Poppins", system-ui;
     padding: 4rem;
     margin-top: 6rem;
@@ -24,7 +22,6 @@
 }
 
 .cart__info{
-    /* background-color: red; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,7 +30,6 @@
 }
 
 .cart .row .cart__info div{
-    /* background-color: aqua; */
     display: flex;
     align-items: center;
     gap: 5px;
@@ -55,11 +51,8 @@
 }
 
 .cart__products--titles {
-    /* background-color: purple; */
     display: flex;
-    /* align-items: flex-end; */
     justify-content: space-between;
-    /* gap: 15rem; */
     width: 100%;
     font-size: .8rem;
     padding: 1.6rem 0.3rem;
@@ -68,14 +61,11 @@
 }
 .detalle{
     width: 57%;
-    /* background-color: red; */
 }
 
 .info {
-    /* width: 60%; */
     display: flex;
     justify-content: center;
-    /* background-color: antiquewhite; */
     align-items: flex-end;
     gap: 35px;
     width: 45%;
@@ -86,7 +76,6 @@
     border: none;
     background-color: transparent;
     text-align: left;
-    /* padding: 1px 0.2px; */
     width: 35%;
     font-size: .8rem;
     display: flex;
@@ -108,9 +97,7 @@
 .payment {
     display: flex;
     align-items: flex-start;
-    /* justify-content: center; */
     flex-direction: column;
-    /* text-align: left; */
 }
 
 .payment span{
@@ -155,7 +142,6 @@
     border: 1px solid #E6B44A;
     border-radius: 5px;
     background-color: #E6B44A;
-    /* font-size: 1.1rem; */
     color: #F7F7F7;
     font-weight: 600;
     padding: .4rem 0;
@@ -177,4 +163,3 @@
     font-weight: 400;
     color: #d2cfcf;
 }
-

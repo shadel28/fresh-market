@@ -2,12 +2,10 @@
 
 .card_product{
     flex-direction: row!important;
-    /* background-color: red; */
     display: flex!important;
     align-items: center!important;
     justify-content: space-between!important;
     width: 100%!important;
-    /* height: 75%; */
     font-family: "Poppins", system-ui;
     margin-bottom: 1rem!important;
 }
@@ -22,7 +20,6 @@
 
 
 .card__body {
-    /* background-color: aquamarine; */
     height: 100%;
     display: flex;
     align-items: center;
@@ -49,8 +46,6 @@
 }
 
 .card__body--desc{
-    /* background-color: bisque; */
-    /* width: 70%; */
     display: flex;
     flex-direction: column;
     text-align: left;

@@ -42,7 +42,6 @@ function Header() {
           <ul>
             <li>
               <Link to='/'>
-              {/* <div className='ul__badge'>+9</div> */}
               <IoPersonOutline className='ul__icon'/>
               </Link>
             </li>
