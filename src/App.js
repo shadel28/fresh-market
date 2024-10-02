@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'; //usamos esto p
 import Cart from './pages/customer/Cart';
 import Home from './pages/customer/Home';
 import Products from './pages/customer/Products';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
           <Route path='/cart' element={<Cart/>}/>
           <Route path='/products' element={<Products/>}/>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter>           
     </div>
   );
 }
