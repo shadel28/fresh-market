@@ -1,13 +1,12 @@
 // Esta es la pagina de inicio
 import Header from "../../components/layaouts/Header/Header";
 import React from 'react'
-import Menu from "../../components/layaouts/Header/Header"
 import Footer from "../../components/layaouts/Footer/Footer"
-import Product_Card from "../../components/Home/ProductCard"
-import Category_Card from "../../components/Home/CategoryCard"
+import ProductCard from "../../components/Home/ProductCard"
+import CategoryCard from "../../components/Home/CategoryCard"
 import { Button } from "react-bootstrap"
+import "./customer.css"
 
-import './Customer.css'
 function Home() {
   return (
     <>
@@ -24,14 +23,14 @@ function Home() {
         <section className="sect Categories my-5">
           <h3>Buscar por Categoria </h3>
           <div className="card-container my-4">
-              <Category_Card img_src={"images/categories/almacen.svg"} title="Almacen"/>
-              <Category_Card img_src={"images/categories/bebidas.svg"} title="Bebidas"/>
-              <Category_Card img_src={"images/categories/lacteos.svg"} title="Lacteos"/>
-              <Category_Card img_src={"images/categories/carnesypescados.svg"} title="Carnes & Pescados"/>
-              <Category_Card img_src={"images/categories/frutas-verduras.svg"} title="Frutas & Verduras"/>
-              <Category_Card img_src={"images/categories/panaderia.svg"} title="Panaderia"/>
-              <Category_Card img_src={"images/categories/congelados.svg"} title="Congelados"/>
-              <Category_Card img_src={"images/categories/limpieza.svg"} title="Limpieza"/>
+              <CategoryCard img_src={"images/categories/almacen.svg"} title="Almacen"/>
+              <CategoryCard img_src={"images/categories/bebidas.svg"} title="Bebidas"/>
+              <CategoryCard img_src={"images/categories/lacteos.svg"} title="Lacteos"/>
+              <CategoryCard img_src={"images/categories/carnesypescados.svg"} title="Carnes & Pescados"/>
+              <CategoryCard img_src={"images/categories/frutas-verduras.svg"} title="Frutas & Verduras"/>
+              <CategoryCard img_src={"images/categories/panaderia.svg"} title="Panaderia"/>
+              <CategoryCard img_src={"images/categories/congelados.svg"} title="Congelados"/>
+              <CategoryCard img_src={"images/categories/limpieza.svg"} title="Limpieza"/>
           </div>
         </section>
         <section className="sect productsPRVW">
@@ -54,11 +53,11 @@ function Home() {
             </div>
           </div>
           <div className="product-cards row my-5 py-4">
-              <Product_Card imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
-              <Product_Card imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
-              <Product_Card imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
-              <Product_Card imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
-              <Product_Card imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
+              <ProductCard imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
+              <ProductCard imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
+              <ProductCard imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
+              <ProductCard imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
+              <ProductCard imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>
           </div>
         </section>
       </main>

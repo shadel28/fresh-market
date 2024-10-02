@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --dark-blue:#4E6BA6;
+    --main-color: #F2C36B;
+    --secondary-color: #D99D55;
+    --white: #F7F7F7;
+    --font: #262626;
+    --grey:#F2F2F2;
+    --yellow: #E6B44A;
+    --notification: #E1AD43;
+}
+
+
+/* HEADER
+   ========================================================================== */
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 2rem 2.5rem;
+    font-family: "Poppins", system-ui;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    background-color: #F7F7F7;
+}
+.header__logo {
+    /* background-color: green; */
+    font-size: 1.3rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+ }
+
+.header__logo .icon{
+    font-size: 2rem;
+    color: var(--yellow);
+ }
+
+.header__logo span  small{
+    font-weight: 200;
+}
+
+.header__logo span,
+.nav__phone span ,
+.nav__cart span{
+    font-weight: 600;
+}
+
+.header__logo small{
+    font-size: .7em;
+    display: block;
+}
+
+.header__logo span{
+    font-size: 1rem;
+}
+
+.header__searchbar{
+    width: 45%;
+}
+
+.header__searchbar .input{
+    width: 100%;
+}
+
+.nav{
+    text-align: right;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: right;
+    width: 35%;
+    gap: 15px;
+}
+
+.nav__phone{
+    display: flex;
+    flex-direction: column;
+}
+.nav__phone span{
+    font-size: 1rem;
+    letter-spacing: 3px;
+}
+.nav__phone small{
+    font-size: .7rem;
+    font-weight: 200;
+}
+
+.nav ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.nav ul li a .ul__badge{
+    background-color: var(--notification);
+    color: white;
+    padding: .1rem 0.2rem;
+    border-radius: 0.2rem;
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.7rem;
+    font-size: 0.6rem;
+    box-shadow: 0px 4px 3px rgba((255), 43, 42, 0.2);
+}
+
+.nav ul li .ul__icon{
+    font-size: 1.2rem;
+    color: var(--font);
+    transition: 0.2s color ease;
+}
+
+.nav ul li .ul__icon:hover{
+    color: var(--yellow);
+}
+
+.nav ul li a {
+    text-decoration: none;
+}
+
+.nav__cart {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+

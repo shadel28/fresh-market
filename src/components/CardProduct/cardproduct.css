@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.card_product{
+    flex-direction: row!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: space-between!important;
+    width: 100%!important;
+    font-family: "Poppins", system-ui;
+    margin-bottom: 1rem!important;
+}
+
+.card__img{
+    width: 180px!important;
+    object-fit: cover;
+    height: 100%;
+    padding: .5rem .7rem;
+    border-radius: 20px;
+}
+
+
+.card__body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0;
+    position: relative;
+}
+
+.card__body input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
+}
+
+.card__body span {
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.card__body input{
+    width: 3rem;
+    border: 1px solid #262626;
+    outline: none;
+    font-weight: 400;
+    font-size: .9rem;
+}
+
+.card__body--desc{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.card__body--desc span{
+    font-size: .6rem;
+    font-weight: 400;
+}
+
+.card__body--desc .title{
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.card__close {
+    position: absolute;
+    top: -15px;
+    right: 10px;
+    padding: .01rem .1rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #8a8787;
+}
