@@ -6,6 +6,7 @@ import ProductCard from "../../components/Home/ProductCard"
 import CategoryCard from "../../components/Home/CategoryCard"
 import { Button } from "react-bootstrap"
 import "./customer.css"
+import { Link } from 'react-router-dom'
 
 function Home() {
   return (
@@ -20,15 +21,15 @@ function Home() {
               <img src="./images/offer2.png" className="img2"alt="" />
           </div>
         </section>
-        <section className="sect Categories my-5">
-          <h3>Buscar por Categoria </h3>
+        <section className="sect Categories my-5 text-start">
+          <h3>Buscar por Categoría </h3>
           <div className="card-container my-4">
-              <CategoryCard img_src={"images/categories/almacen.svg"} title="Almacen"/>
+              <CategoryCard img_src={"images/categories/almacen.svg"} title="Almacén"/>
               <CategoryCard img_src={"images/categories/bebidas.svg"} title="Bebidas"/>
-              <CategoryCard img_src={"images/categories/lacteos.svg"} title="Lacteos"/>
+              <CategoryCard img_src={"images/categories/lacteos.svg"} title="Lácteos"/>
               <CategoryCard img_src={"images/categories/carnesypescados.svg"} title="Carnes & Pescados"/>
               <CategoryCard img_src={"images/categories/frutas-verduras.svg"} title="Frutas & Verduras"/>
-              <CategoryCard img_src={"images/categories/panaderia.svg"} title="Panaderia"/>
+              <CategoryCard img_src={"images/categories/panaderia.svg"} title="Panadería"/>
               <CategoryCard img_src={"images/categories/congelados.svg"} title="Congelados"/>
               <CategoryCard img_src={"images/categories/limpieza.svg"} title="Limpieza"/>
           </div>
@@ -37,20 +38,20 @@ function Home() {
           <div className="prod-head">
             <h3>Productos en Tendencia</h3>
             <Button className="cat-btn">
-                Ver todos
+              <Link to='/products'>
+              Ver todos
+              </Link>
             </Button>
           </div>
-          <div className="categories-filter-container my-4">
-            <div className="categories-filter">
-              <Button className="cat-btn">Almacen</Button>
+          <div className="categories-filter-container my-4 w-100">
+              <Button className="cat-btn">Almacén</Button>
               <Button className="cat-btn">Bebidas</Button>
-              <Button className="cat-btn">Lacteos</Button>
+              <Button className="cat-btn">Lácteos</Button>
               <Button className="cat-btn">Carnes & pescados</Button>
               <Button className="cat-btn">Frutas & verduras</Button>
-              <Button className="cat-btn">Panaderia</Button>
+              <Button className="cat-btn">Panadería</Button>
               <Button className="cat-btn">Congelados</Button>
               <Button className="cat-btn">Limpieza</Button>
-            </div>
           </div>
           <div className="product-cards row my-5 py-4">
               <ProductCard imgSrc='./images/apple.png' name='Manzana Roja' price="50"/>

@@ -3,20 +3,17 @@ import '../layout.css'
 import { Link } from 'react-router-dom'
 import { IoPersonOutline } from "react-icons/io5";
 import { FiHeart, FiShoppingCart  } from "react-icons/fi";
-import { CiShoppingBasket } from "react-icons/ci";
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import logo from '../../../assets/logo.png';
 
 function Header() {
   return (
-      <header>
-        <div className='header__logo'>
-          <CiShoppingBasket  className='icon'/>
-          <span>Fresh<br/> <small>Market</small></span>
-        </div>
+      <header className='header'>
+        <img src={logo} alt="img" style={{ width: '100px' }}/>
         <div className='header__searchbar'>
         <InputGroup className="mb-1">
         <DropdownButton
@@ -24,22 +21,26 @@ function Header() {
           title="CATEGORÍAS"
           id="input-group-dropdown-1"
         >
-          <Dropdown.Item href="#">Frutas</Dropdown.Item>
-          <Dropdown.Item href="#">Vegetales</Dropdown.Item>
+          <Dropdown.Item href="#">Bebidas</Dropdown.Item>
           <Dropdown.Item href="#">Lácteos</Dropdown.Item>
+          <Dropdown.Item href="#">Carnes & pescados</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item href="#">Carnes</Dropdown.Item>
-          <Dropdown.Item href="#">Abarrotes</Dropdown.Item>
+          <Dropdown.Item href="#">Frutas & verduras</Dropdown.Item>
+          <Dropdown.Item href="#">Panadería</Dropdown.Item>
+          <Dropdown.Item href="#">Congelados</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Almacén</Dropdown.Item>
+          <Dropdown.Item href="#">Limpieza</Dropdown.Item>
         </DropdownButton>
         <Form.Control aria-label="Text input with dropdown button" className='input'/>
       </InputGroup>
         </div>
-        <nav className='nav'>
+        <nav className='nav__header'>
         <div className='nav__phone'>
           <span>809 123 4567</span>
           <small>Atención 24/7</small>
         </div>
-          <ul>
+          <ul className='nav__ul'>
             <li>
               <Link to='/'>
               <IoPersonOutline className='ul__icon'/>

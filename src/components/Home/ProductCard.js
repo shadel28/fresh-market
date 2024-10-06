@@ -8,7 +8,7 @@ export default function ProductCard(props) {
     <>
       <Card className='prod-card'>
         <div className='product-content'>
-          <Card.Img className="card-img" variant="top" src={props.imgSrc} style={{width:'100px',height:'115px'}} />
+          <Card.Img className="card-img" variant="top" src={props.imgSrc} style={{width:'100px'}} />
           <Card.Body>
             <Card.Title>{props.title}</Card.Title>
             <Card.Text className='prod-info'>

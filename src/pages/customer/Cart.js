@@ -8,8 +8,8 @@ import { TbArrowNarrowLeft } from "react-icons/tb";
 import Form from 'react-bootstrap/Form';
 import { IoIosLock } from "react-icons/io";
 import InputGroup from 'react-bootstrap/InputGroup';
-import Footer from "../../components/layaouts/Footer/Footer/Footer";
-
+import Footer from "../../components/layaouts/Footer/Footer";
+import { Link } from "react-router-dom";
 
 
 function Cart() {
@@ -17,7 +17,7 @@ function Cart() {
     <>
         <Header/>
         <section className="cart">
-          <div className="row">
+          <div className="cart_row">
             <div className="cart__info">
               <div>
               <MdShoppingBag className="cart__info--icon"/>
@@ -42,9 +42,9 @@ function Cart() {
               <CardProduct/>
               <CardProduct/>
             </div>
-            <button className="shop-btn"><TbArrowNarrowLeft className="shop-btn__icon"/>Continuar Comprando</button>
+            <button className="shop-btn"><Link to='../products'><TbArrowNarrowLeft className="shop-btn__icon"/>Continuar Comprando</Link></button>
           </div>
-          <div className="row">
+          <div className="cart_row">
             <div className="payment">
               <span>Detalles de pago</span>
               <small>Completa tu compra validando tus detalles de pago.</small>
@@ -87,14 +87,14 @@ function Cart() {
               </div>
             </Form.Group>
             </Form>
-            <button>Pagar $82.6</button>
+            <button style={{width: '100%'}}>Pagar $82.6</button>
             <Form.Text id="pagos" muted>
               <IoIosLock />
               Los pagos son securos y encriptados
             </Form.Text>
           </div>
-          <Footer/>
         </section>
+        <Footer/>
     </>
   )
 }
