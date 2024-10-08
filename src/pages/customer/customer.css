@@ -8,23 +8,20 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* background-color: black; */
-    /* gap: 45px; */
     font-family: "Poppins", system-ui;
     padding: 4rem;
     margin-top: 6rem;
 }
 
-.row{
+.cart_row{
     width: 60%;
 }
 
-.cart .row:nth-child(2){
+.cart .cart_row:nth-child(2){
     width: 35%;
 }
 
 .cart__info{
-    /* background-color: red; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,8 +29,7 @@
     border-bottom: 1px solid #F2F2F2;
 }
 
-.cart .row .cart__info div{
-    /* background-color: aqua; */
+.cart .cart_row .cart__info div{
     display: flex;
     align-items: center;
     gap: 5px;
@@ -41,25 +37,22 @@
 
 .cart__info--icon {
     font-size: 1.8rem;
-    color: #E6B44A;
+    color: #198754;
 }
 
-.cart .row .cart__info div h1 {
+.cart .cart_row .cart__info div h1 {
     font-size: 1.4rem;
     margin: 0;
 }
 
-.cart .row .cart__info div h1,
+.cart .cart_row .cart__info div h1,
 .cart__info span{
     font-weight: 700;
 }
 
 .cart__products--titles {
-    /* background-color: purple; */
     display: flex;
-    /* align-items: flex-end; */
     justify-content: space-between;
-    /* gap: 15rem; */
     width: 100%;
     font-size: .8rem;
     padding: 1.6rem 0.3rem;
@@ -68,49 +61,47 @@
 }
 .detalle{
     width: 57%;
-    /* background-color: red; */
 }
 
 .info {
-    /* width: 60%; */
     display: flex;
     justify-content: center;
-    /* background-color: antiquewhite; */
     align-items: flex-end;
     gap: 35px;
     width: 45%;
 }
 
-.row .shop-btn {
+.cart_row .shop-btn {
     outline: none;
     border: none;
     background-color: transparent;
     text-align: left;
-    /* padding: 1px 0.2px; */
     width: 35%;
     font-size: .8rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #E6B44A;
     font-weight: 600;
 }
 
-.row .shop-btn .shop-btn__icon{
+.cart_row .shop-btn a {
+    color: #198754;
+    text-decoration: none;
+}
+
+.cart_row .shop-btn .shop-btn__icon{
     font-size: 1.2rem;
     transition: all 0.2s ease;
 }
 
-.row .shop-btn:hover{
-    color: #a57419;
+.cart_row .shop-btn a:hover{
+    color: #3bcf8a;
 }
 
 .payment {
     display: flex;
     align-items: flex-start;
-    /* justify-content: center; */
     flex-direction: column;
-    /* text-align: left; */
 }
 
 .payment span{
@@ -118,7 +109,7 @@
     font-weight: 600;
 }
 
-.row form{
+.cart_row form{
     text-align: left;
     padding: 1.5rem;
 }
@@ -128,7 +119,7 @@
     font-size: .8rem;
 }
 
-.row form input{
+.cart_row form input{
     margin-bottom: 1rem;
     border-color: #d2cfcf;
 }
@@ -150,12 +141,11 @@
     font-weight: 600;
 }
 
-.cart .row:nth-child(2) button{
+.cart .cart_row:nth-child(2) button{
     outline: none;
-    border: 1px solid #E6B44A;
+    border: 1px solid #198754;
     border-radius: 5px;
-    background-color: #E6B44A;
-    /* font-size: 1.1rem; */
+    background-color: #198754;
     color: #F7F7F7;
     font-weight: 600;
     padding: .4rem 0;
@@ -163,9 +153,9 @@
     transition: all 0.2s ease-in;
 }
 
-.cart .row:nth-child(2) button:hover{
-    border: 1px solid #F2C36B;
-    background-color: #F2C36B;
+.cart .cart_row:nth-child(2) button:hover{
+    border: 1px solid #198754;
+    background-color: #29b674;
 }
 
 #pagos{
@@ -184,6 +174,7 @@
 
 main{
     width: 100% !important;
+    margin-top: 8rem;
 }
 
 .nav-container{
@@ -212,11 +203,9 @@ main{
 }
 
 .banner-content .img1{
-    background-color: blue;
     width: 65%;
 }
 .banner-content .img2{
-    background-color: yellow;
     width: 31%;
 }
 .sect{
@@ -232,11 +221,12 @@ main{
 }
 
 .categories-filter-container{
-    width: 50%;
-}
-.categories-filter{
-    
-    gap: 20px;
+    width: 100%;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
 }
 
 .prod-head{
@@ -260,12 +250,18 @@ main{
     padding: 10px 5px !important;
     border-radius: 50px !important;
     text-align: center !important;
+
 }
 
 .cat-btn:hover {
     background-color: #fff !important;
     color:#000 !important;
     box-shadow: 0px 10px 50px rgba(54, 128, 45, 0.4) !important;
+}
+
+.cat-btn a{
+    text-decoration: none;
+    color: #000; 
 }
 
 .product-cards{
@@ -275,12 +271,6 @@ main{
 .card-img{
     margin: 0 auto !important;
 }
-/*
-.small-text{
-    text-decoration: none;
-    font-size: 12px;
-    cursor: pointer;
-}*/
 
 footer{
     width: 100% !important;
