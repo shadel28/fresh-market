@@ -80,7 +80,7 @@ app.post("/server-register-customer", async (req, res) => {
     });
 
     return res
-      .status(201)
+      .status(200)
       .json({ cliente: nuevoCliente, usuario: nuevoUsuario });
   } catch (error) {
     console.error(error);
@@ -128,7 +128,7 @@ app.post("/server-login-customer", async (req, res) => {
         .json({ message: "Las credenciales son incorrectas" });
     }
 
-    return res.status(200).json("Sesion inicada");
+    return res.status(200).json("Sesion inciada");
   } catch (err) {
     console.error("aqui ", err);
     res.status(500).json({ message: "Error al procesar el login" });
@@ -175,6 +175,10 @@ app.post("/register-customer", async (req, res) => {
     res.status(500).json({ error: "Error en la solicitud para crear cliente" });
   }
 });
+
+// CART ROUTES
+
+app.post("/payment-details", async (req, res) => {});
 
 app.listen(5000, () => {
   console.log("Server inicio en el puerto 5000");

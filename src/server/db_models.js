@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "./database.js";
+// Simular las tablas y columnas de la DB
 
 export const Categorias = sequelize.define(
   "categorias",

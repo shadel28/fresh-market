@@ -32,6 +32,7 @@ function Login() {
   const handleMouseUpPassword = (event) => {
     event.preventDefault();
   };
+
   const { register, handleSubmit } = useForm();
 
   const { mutate: loginCustomer, isLoading, error } = useLoginCustomer();
