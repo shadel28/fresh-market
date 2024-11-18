@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   FormControl,
   FormLabel,
@@ -16,7 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
+import { CartContext } from "../../components/context/CartContext";
 import { useLoginCustomer } from "../../api/FreshMarket";
 import { useForm } from "react-hook-form";
 
@@ -37,10 +37,20 @@ function Login() {
 
   const { mutate: loginCustomer, isLoading, error } = useLoginCustomer();
 
+  const { handleClientId } = useContext(CartContext);
+
   const submitCredentials = (credentials) => {
-    loginCustomer({
-      customerCredentials: credentials,
-    });
+    loginCustomer(
+      {
+        customerCredentials: credentials,
+      },
+      {
+        onSuccess: (data) => {
+          console.log("desde login.js ", data);
+          handleClientId(data);
+        },
+      }
+    );
   };
 
   if (isLoading) return <div>Loading...</div>;

@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useContext } from "react";
 import "../layout.css";
 import { Link } from "react-router-dom";
 import { IoPersonOutline } from "react-icons/io5";
@@ -9,8 +9,10 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import logo from "../../../assets/logo.png";
+import { CartContext } from "../../context/CartContext";
 
 function Header() {
+  const { productCount, products } = useContext(CartContext);
   return (
     <header className="header">
       <img src={logo} alt="img" style={{ width: "100px" }} />
@@ -57,7 +59,9 @@ function Header() {
           </li>
           <li>
             <Link to="/cart">
-              <div className="ul__badge">+10</div>
+              <div className="ul__badge">
+                {productCount ? productCount : ""}
+              </div>
               <FiShoppingCart className="ul__icon" />
             </Link>
           </li>

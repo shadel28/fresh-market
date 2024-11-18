@@ -1,40 +1,76 @@
-// Esta es la pagina de carrito
+import React, { useContext, useState } from "react";
 import Header from "../../components/layaouts/Header/Header";
-import { React, useState } from "react";
 import CardProduct from "../../components/CardProduct/CardProduct";
 import "./customer.css";
 import { MdShoppingBag } from "react-icons/md";
 import { TbArrowNarrowLeft } from "react-icons/tb";
-// import Form from "react-bootstrap/Form";
 import { IoIosLock } from "react-icons/io";
-// import InputGroup from "react-bootstrap/InputGroup";
 import Footer from "../../components/layaouts/Footer/Footer";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl, FormLabel, Button, Typography } from "@mui/material";
 import Select from "@mui/material/Select";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import { CartContext } from "../../components/context/CartContext";
+import MyFullScreenDialog from "../../components/ProcessPayment";
+import { useSendPayment } from "../../api/FreshMarket";
 
 function Cart() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-  const { register, handleSubmit } = useForm({
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // Estado para controlar el diálogo
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       metodo: "",
     },
   });
 
-  const handleSelectedPaymendMethod = (data) => {
-    console.log("Datos enviados: ", data);
+  const handleDialogClose = () => {
+    reset();
+    empymCart();
+    setIsDialogOpen(false); // Cerrar el diálogo
   };
 
   const handleChange = (e) => {
     setSelectedPaymentMethod(e.target.value);
     console.log("selectedPaymentMethod ", selectedPaymentMethod);
   };
+
+  const { products, empymCart, clientId } = useContext(CartContext);
+
+  var subtotal = products.map((p) => p.price * p.quantity);
+  var totals = subtotal.reduce((acc, calc) => {
+    return acc + calc;
+  }, 0);
+
+  var itbis = (totals * 18) / 100;
+
+  // const { mutate: registerCustomer, isLoading, error } = useRegisterCustomer();
+
+  const { mutate: sendPayment, isLoading, error } = useSendPayment();
+
+  const handlePayment = (data) => {
+    console.log("Datos enviados: ", data);
+    console.log("Products: ", products);
+
+    const factura = {
+      id_cliente: clientId,
+      id_metodo_pago: data.metodo,
+      subtotal: totals,
+      total: totals + itbis,
+      itbis,
+      productos: products.map((p) => ({
+        id_producto: p.id_product,
+        cantidad: p.quantity,
+        precio_unitario: p.price,
+      })),
+    };
+
+    sendPayment(factura); // Llama a la función que envía la solicitud al servidor
+    setIsDialogOpen(true);
+  };
+
   return (
     <>
       <Header />
@@ -45,7 +81,7 @@ function Cart() {
               <MdShoppingBag className="cart__info--icon" />
               <h1>Mi Carrito</h1>
             </div>
-            <span>3 Productos</span>
+            <span>{products.length} Productos</span>
           </div>
           <div className="cart__products">
             <div className="cart__products--titles">
@@ -55,12 +91,9 @@ function Cart() {
               <div className="info">
                 <span>Precio</span>
                 <span>Cantidad</span>
-
                 <span>Total</span>
               </div>
             </div>
-            <CardProduct />
-            <CardProduct />
             <CardProduct />
           </div>
           <button className="shop-btn">
@@ -75,76 +108,8 @@ function Cart() {
             <span>Detalles de pago</span>
             <small>Completa tu compra validando tus detalles de pago.</small>
           </div>
-          {/* <Form onSubmit={handleSubmit(handleSelectedPaymendMethod())}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label className="form__label">Correo</Form.Label>
-              <Form.Control type="email" size="sm" />
 
-              <Form.Label className="form__label">Método de pago</Form.Label>
-              <Form.Select size="sm" {...register("opcioness")}>
-                <option value="efectivo" {...register("efectivo")}>
-                  Efectivo
-                </option>
-                <option value="debito">Tarjeta de débito</option>
-                <option value="credito">Tarjeta de crédito</option>
-                <option value="paypal" {...register("paypal")}>
-                  PayPal
-                </option>
-                <option value="punto">Puntos FreshMarket</option>
-              </Form.Select>
-
-              <Form.Label className="form__label">
-                Detalle de tarjeta
-              </Form.Label>
-              <Form.Control type="text" size="sm" />
-
-              <Form.Label className="form__label">
-                Nombre de la tarjeta
-              </Form.Label>
-              <Form.Control type="text" size="sm" />
-
-              <Form.Label className="form__label">
-                Direccion de envio
-              </Form.Label>
-              <Form.Select size="sm">
-                <option>Santo Domingo</option>
-                <option>Valverde</option>
-                <option>La Vega</option>
-              </Form.Select>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  aria-label="First name"
-                  size="sm"
-                  placeholder="No."
-                />
-                <Form.Control
-                  aria-label="Last name"
-                  size="sm"
-                  placeholder="Direccion"
-                />
-              </InputGroup>
-
-              <div className="totals">
-                <div className="totals_row">
-                  <span>Subtotal</span>
-                  <span>$70.00</span>
-                </div>
-                <div className="totals_row">
-                  <span>ITBIS</span>
-                  <span>$12.6</span>
-                </div>
-                <div className="totals_row">
-                  <span>Total</span>
-                  <span>$82.6</span>
-                </div>
-              </div>
-            </Form.Group>
-            <button style={{ width: "100%" }} type="submit">
-              Pagar $82.6
-            </button>
-          </Form> */}
-
-          <form onSubmit={handleSubmit(handleSelectedPaymendMethod)}>
+          <form onSubmit={handleSubmit(handlePayment)}>
             <FormControl fullWidth>
               <FormLabel
                 sx={{
@@ -178,16 +143,16 @@ function Cart() {
                 {...register("metodo")}
                 onChange={handleChange}
               >
-                <MenuItem value="efectivo">Efectivo</MenuItem>
-                <MenuItem value="debito">Tarjeta de débito</MenuItem>
-                <MenuItem value="credito">Tarjeta de crédito</MenuItem>
-                <MenuItem value="paypal">Paypal</MenuItem>
-                <MenuItem value="puntos">Puntos FreshMarket</MenuItem>
+                <MenuItem value="1">Efectivo</MenuItem>{" "}
+                {/*para mas simplicidad los valores seran id_metodo_pago */}
+                <MenuItem value="2">Tarjeta de débito</MenuItem>
+                <MenuItem value="3">Tarjeta de crédito</MenuItem>
+                <MenuItem value="4">Paypal</MenuItem>
+                <MenuItem value="5">Puntos FreshMarket</MenuItem>
               </Select>
             </FormControl>
 
-            {/* Renderizado condicional del input según el método de pago */}
-            {selectedPaymentMethod === "debito" && (
+            {selectedPaymentMethod === "2" && (
               <FormControl fullWidth>
                 <FormLabel
                   sx={{
@@ -207,7 +172,7 @@ function Cart() {
               </FormControl>
             )}
 
-            {selectedPaymentMethod === "credito" && (
+            {selectedPaymentMethod === "3" && (
               <FormControl fullWidth>
                 <FormLabel
                   sx={{
@@ -227,6 +192,26 @@ function Cart() {
               </FormControl>
             )}
 
+            {selectedPaymentMethod === "4" && (
+              <FormControl fullWidth>
+                <FormLabel
+                  sx={{
+                    fontWeight: "700",
+                    color: "#000",
+                    margin: "2rem 0 .4rem 0",
+                  }}
+                >
+                  Cuenta de PayPal
+                </FormLabel>
+                <OutlinedInput
+                  type="text"
+                  placeholder="Ingrese el número de su cuenta Paypal"
+                  {...register("numeroCredito")}
+                  required
+                />
+              </FormControl>
+            )}
+
             <FormControl fullWidth>
               <FormLabel
                 sx={{
@@ -239,10 +224,25 @@ function Cart() {
               </FormLabel>
               <OutlinedInput
                 required
-                {...register("correo")}
+                {...register("direccion")}
                 sx={{ height: { lg: "3rem" } }}
               />
             </FormControl>
+
+            <div className="totals">
+              <div className="totals_row">
+                <span>Subtotal</span>
+                <span>${totals.toFixed(2)}</span>
+              </div>
+              <div className="totals_row">
+                <span>ITBIS</span>
+                <span>${itbis.toFixed(2)}</span>
+              </div>
+              <div className="totals_row">
+                <span>Total</span>
+                <span>${(totals + itbis).toFixed(2)}</span>
+              </div>
+            </div>
 
             <Button
               type="submit"
@@ -255,23 +255,27 @@ function Cart() {
                 fontSize: { md: ".6rem", lg: "1rem" },
                 ":hover": { color: "#fff", backgroundColor: "#198754" },
               }}
+              disabled={products.length === 0}
             >
-              Pagar 82.15
+              Pagar ${(totals + itbis).toFixed(2)}
             </Button>
-            {/* <Form.Text id="pagos" muted>
-            <IoIosLock />
-            
-          </Form.Text> */}
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Typography>
                 <IoIosLock />
-                Los pagos son securos y encriptados
+                Los pagos son seguros y encriptados
               </Typography>
             </Box>
           </form>
         </div>
       </section>
       <Footer />
+
+      {/* Renderizar el diálogo */}
+      <MyFullScreenDialog
+        open={isDialogOpen}
+        onClose={handleDialogClose}
+        aria-hidden={!isDialogOpen ? "true" : undefined}
+      />
     </>
   );
 }

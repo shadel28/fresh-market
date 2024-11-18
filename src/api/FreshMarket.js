@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -40,6 +40,38 @@ export const useRegisterCustomer = () => {
     onError: (error) => {
       console.log("registro error data  ", error);
       navigate("/register");
+    },
+  });
+};
+
+// PRODUCTS
+
+const getProducts = async () => {
+  const response = await axios.get("/products/");
+  return response.data;
+};
+
+export const useGetProducts = () => {
+  return useQuery({
+    queryFn: getProducts,
+    onError: (error) => {
+      console.log("Error consultando productos ", error);
+    },
+  });
+};
+
+const sendPayment = async ({ paymentInfo }) => {
+  console.log("paymentInfo ", paymentInfo);
+  const response = await axios.post("/payment/", paymentInfo);
+  console.log("sendPayment ", response.data);
+  return response.data;
+};
+
+export const useSendPayment = () => {
+  return useMutation({
+    mutationFn: sendPayment,
+    onError: (error) => {
+      console.log("Error creando el pago ", error);
     },
   });
 };
