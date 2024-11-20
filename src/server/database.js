@@ -14,7 +14,13 @@ if (!username || !password || !database) {
 }
 
 const sequelize = new Sequelize(
-  `postgres://${username}:${password}@localhost:5432/${database}`
+  `postgres://${username}:${password}@localhost:5432/${database}`,
+  {
+    dialect: "postgres",
+    define: {
+      freezeTableName: true, // Evita que Sequelize pluralice automáticamente los nombres de las tablas
+    },
+  }
 );
 
 async function testConnection() {

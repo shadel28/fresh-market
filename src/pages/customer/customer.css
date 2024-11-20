@@ -114,20 +114,11 @@
     padding: 1.5rem;
 }
 
-.form__label{
-    font-weight: 600;
-    font-size: .8rem;
-}
-
-.cart_row form input{
-    margin-bottom: 1rem;
-    border-color: #d2cfcf;
-}
-
 .totals {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 2rem;
 }
 
 .totals_row{

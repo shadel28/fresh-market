@@ -11,7 +11,7 @@
 }
 
 .card__img{
-    width: 180px!important;
+    width: 80px!important;
     object-fit: cover;
     height: 100%;
     padding: .5rem .7rem;
@@ -23,7 +23,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 0;
     position: relative;
 }
@@ -57,13 +57,20 @@
 }
 
 .card__body--desc .title{
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 600;
+}
+
+.card__body--col {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 45%;
 }
 
 .card__close {
     position: absolute;
-    top: -15px;
+    top: 0px;
     right: 10px;
     padding: .01rem .1rem;
     background-color: transparent;

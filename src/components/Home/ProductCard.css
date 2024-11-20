@@ -20,7 +20,7 @@
     flex-direction: row ;
     gap: 5px;
 }
-.form-select{
+.opciones input{
     width: 30% ;
 }
 .addToCart-btn{
