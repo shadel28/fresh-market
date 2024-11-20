@@ -1,14 +1,6 @@
 import React, { useContext } from "react";
-import {
-  FormControl,
-  FormLabel,
-  Button,
-  Divider,
-  Typography,
-  Box,
-} from "@mui/material";
-import "./customer.css";
-import { Link } from "react-router-dom";
+import { FormControl, FormLabel, Button, Typography, Box } from "@mui/material";
+import "../customer/customer.css";
 
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -16,10 +8,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CartContext } from "../../components/context/CartContext";
-import { useLoginCustomer } from "../../api/FreshMarket";
+import { useLoginEmployee } from "../../api/FreshMarket";
 import { useForm } from "react-hook-form";
 
-function Login() {
+function LoginEmployee() {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -34,14 +26,14 @@ function Login() {
 
   const { register, handleSubmit } = useForm();
 
-  const { mutate: loginCustomer, isLoading, error } = useLoginCustomer();
+  const { mutate: loginEmployee, isLoading, error } = useLoginEmployee();
 
   const { handleClientId } = useContext(CartContext);
 
   const submitCredentials = (credentials) => {
-    loginCustomer(
+    loginEmployee(
       {
-        customerCredentials: credentials,
+        employeeCredentials: credentials,
       },
       {
         onSuccess: (data) => {
@@ -69,11 +61,11 @@ function Login() {
         }}
       >
         <Typography fontSize="1.7rem" fontWeight="700">
-          Bienvenido de vuelta
+          Bienvenido de vuelta, admin
         </Typography>
         <Typography fontSize="1rem" fontWeight="400">
-          Accede a tu cuenta personal para comprar tus productos en el mejor
-          mercado del país.
+          Accede al panel de administrador para mejorar la productividad de tu
+          dia a dia.
         </Typography>
         <form className="form" onSubmit={handleSubmit(submitCredentials)}>
           <FormControl>
@@ -142,29 +134,10 @@ function Login() {
             </Button>
           </Box>
         </form>
-
-        <Divider>O</Divider>
-        <div className="no-account">
-          <Typography sx={{ fontSize: { md: ".9rem", lg: "1.2rem" } }}>
-            ¿No tiene una cuenta?
-          </Typography>
-          <Link to="/register">
-            <Button
-              sx={{
-                fontWeight: "600",
-                color: "#198754",
-                fontSize: { md: ".6rem", lg: "1rem" },
-                ":hover": { color: "#fff", backgroundColor: "#198754" },
-              }}
-            >
-              Crear Cuenta
-            </Button>
-          </Link>
-        </div>
       </Box>
       <div className="column"></div>
     </section>
   );
 }
 
-export default Login;
+export default LoginEmployee;

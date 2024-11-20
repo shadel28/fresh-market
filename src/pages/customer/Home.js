@@ -13,7 +13,6 @@ function Home() {
   const [categoria, setCategoria] = useState("Almacén");
 
   const filterProducts = (cat) => {
-    console.log("categoria ", cat);
     setCategoria(cat);
   };
 

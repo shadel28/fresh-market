@@ -5,6 +5,7 @@ import {
   DetallesFactura,
   Empleados,
   Facturas,
+  Inventario,
   OrdenesCompra,
   Pagos,
   Productos,
@@ -177,7 +178,6 @@ app.post("/server-login-customer", async (req, res) => {
   try {
     const nombre_service = req.get("nombre_service");
     const service_api_key = req.get("service_api_key");
-    console.log("deentro de mi request ", nombre_service);
     if (!nombre_service || !service_api_key) {
       return res.status(400).json({
         message:
@@ -201,7 +201,7 @@ app.post("/server-login-customer", async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const cliente = await Usuario.findOne({ where: { correo } }); // deberiamos filtrar tambien por si es empleado o cliente pero sera para despues ig
+    const cliente = await Usuario.findOne({ where: { correo } });
     if (!cliente) {
       return res.status(404).json({ message: "Cliente no encontrado" });
     }
@@ -215,8 +215,8 @@ app.post("/server-login-customer", async (req, res) => {
 
     return res.status(200).json(cliente.id_cliente);
   } catch (err) {
-    console.error("aqui ", err);
-    res.status(500).json({ message: "Error al procesar el login" });
+    console.error("Error al iniciar sesion (cliente) ", err);
+    res.status(500).json({ message: "Error al iniciar sesion (cliente) " });
   }
 });
 
@@ -235,7 +235,7 @@ app.post("/login-customer", async (req, res) => {
     );
     res.json(response.data);
   } catch (error) {
-    console.log("el error aqui ", error);
+    console.log("Error en la solicitud para iniciar sesion ", error);
     res
       .status(500)
       .json({ error: "Error en la solicitud para iniciar sesion" });
@@ -256,83 +256,147 @@ app.post("/register-customer", async (req, res) => {
     );
     res.json(response.data);
   } catch (error) {
-    console.log("el error aqui ", error);
+    console.log("Error en la solicitud para crear cliente ", error);
     res.status(400).json({ error: "Error en la solicitud para crear cliente" });
   }
 });
 
-app.post("/payment", async (req, res) => {
+// EMPLOYEE
+
+app.post("/login-employee", async (req, res) => {
   try {
-    const {
-      id_cliente,
-      id_metodo_pago,
-      subtotal,
-      total,
-      itbis,
-      productos, // Array de productos con id_producto, cantidad y precio_unitario
-    } = req.body;
-
-    const timestamp = new Date().toISOString().slice(0, -1);
-
-    // Crear la factura
-    const factura = await Facturas.create({
-      id_cliente,
-      id_empleado: 1, // hardcoded por ahora
-      fecha: timestamp,
-      subtotal_factura: subtotal,
-      itbis,
-      porcentaje_descuento: 0,
-      total_facturado: total,
-    });
-
-    console.log("Factura creada:", factura.id_factura);
-
-    // Crear el pago
-    const generatePayment = await Pagos.create({
-      id_factura: factura.id_factura,
-      fecha_pago: timestamp,
-      monto_pagado: total,
-      id_metodo_pago: id_metodo_pago,
-    });
-
-    console.log("Pago creado:", generatePayment.id_pago);
-
-    // Crear la orden de compra (puedes adaptarlo según tus necesidades)
-    const orden = await OrdenesCompra.create({
-      id_proveedor: 1, // hardcoded por ahora
-      fecha_emision: timestamp,
-      subtotalfactura: subtotal,
-      descuento: 0,
-      itbis,
-      total_facturado: total,
-    });
-
-    // Insertar múltiples productos en DetalleOrdenCompra y DetallesFactura
-    for (const producto of productos) {
-      await DetalleOrdenCompra.create({
-        id_orden: orden.id_orden,
-        id_producto: producto.id_producto,
-        precio_unidad_compra: producto.precio_unitario,
-        cantidad: producto.cantidad,
-      });
-
-      await DetallesFactura.create({
-        id_factura: factura.id_factura,
-        id_producto: producto.id_producto,
-        cantidad_vendida: producto.cantidad,
-      });
+    const { correo, clave } = req.body;
+    if (!correo || !clave) {
+      return res
+        .status(400)
+        .json({ message: "Correo y clave son requeridos." });
     }
 
-    // TODO: Eliminar productos de inventario al generar factura
+    const { error } = usuarioSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
-    res.status(200).json({ message: "Operación completada" });
-  } catch (error) {
-    console.log("error creando factura ", error);
-    res.status(400).json("Error creando factura");
+    const empleado = await Usuario.findOne({ where: { correo } });
+    if (!empleado) {
+      return res.status(404).json({ message: "Empleado no encontrado" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(clave, empleado.clave);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ message: "Las credenciales son incorrectas" });
+    }
+
+    return res.status(200).json(empleado.id_empleado);
+  } catch (err) {
+    console.error("Error al iniciar sesion (empleado) ", err);
+    res.status(500).json({ message: "Error al iniciar sesion (empleado)" });
   }
 });
 
 // PRODUCTS ROUTES
+
+app.post("/payment", async (req, res) => {
+  const t = await sequelize.transaction();
+
+  try {
+    const { id_cliente, id_metodo_pago, subtotal, total, itbis, productos } =
+      req.body;
+
+    const timestamp = new Date().toISOString().slice(0, -1);
+
+    const factura = await Facturas.create(
+      {
+        id_cliente,
+        id_empleado: 1, // hardcoded por ahora
+        fecha: timestamp,
+        subtotal_factura: subtotal,
+        itbis,
+        porcentaje_descuento: 0,
+        total_facturado: total,
+      },
+      { transaction: t }
+    );
+
+    const generatePayment = await Pagos.create(
+      {
+        id_factura: factura.id_factura,
+        fecha_pago: timestamp,
+        monto_pagado: total,
+        id_metodo_pago,
+      },
+      { transaction: t }
+    );
+
+    const orden = await OrdenesCompra.create(
+      {
+        id_proveedor: 1, // hardcoded por ahora
+        fecha_emision: timestamp,
+        subtotalfactura: subtotal,
+        descuento: 0,
+        itbis,
+        total_facturado: total,
+      },
+      { transaction: t }
+    );
+
+    // Insertar múltiples productos y actualizar inventario
+    for (const producto of productos) {
+      const existingProduct = await Inventario.findOne(
+        {
+          where: { id_producto: producto.id_producto },
+        },
+        { transaction: t }
+      );
+
+      if (!existingProduct || existingProduct.cantidad_disponible <= 0) {
+        await t.rollback(); // Revertir la transacción si no hay stock
+        return res.status(400).json({
+          message: "out of stock",
+        });
+      } else {
+        await DetalleOrdenCompra.create(
+          {
+            id_orden: orden.id_orden,
+            id_producto: producto.id_producto,
+            precio_unidad_compra: producto.precio_unitario,
+            cantidad: producto.cantidad,
+          },
+          { transaction: t }
+        );
+
+        await DetallesFactura.create(
+          {
+            id_factura: factura.id_factura,
+            id_producto: producto.id_producto,
+            cantidad_vendida: producto.cantidad,
+          },
+          { transaction: t }
+        );
+
+        await Inventario.decrement(
+          "cantidad_disponible",
+          {
+            by: producto.cantidad,
+            where: { id_producto: producto.id_producto },
+          },
+          { transaction: t }
+        );
+      }
+    }
+
+    // Confirmar la transacción si todo va bien
+    await t.commit();
+    res.status(200).json({ message: "Operación completada" });
+  } catch (error) {
+    await t.rollback(); // Revertir la transacción en caso de error
+    console.log("Error creando factura:", error);
+    res.status(400).json("Error creando factura");
+  }
+});
+
 app.get("/products/", async (req, res) => {
   try {
     const productosInventario = await sequelize.query(

@@ -8,6 +8,10 @@ import Login from "./pages/customer/Login";
 import Register from "./pages/customer/Register";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { CartProvider } from "./components/context/CartContext";
+import LoginEmployee from "./pages/employee/LoginEmployee";
+import Inventory from "./pages/employee/Inventory";
+import Purchases from "./pages/employee/Purchases";
+import Supplier from "./pages/employee/Supplier";
 
 const client = new QueryClient();
 function App() {
@@ -23,6 +27,10 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/login-employee" element={<LoginEmployee />} />
+              <Route path="/inventory" element={<Inventory />} />
+              <Route path="/purchases" element={<Purchases />} />
+              <Route path="/supplier" element={<Supplier />} />
             </Routes>
           </BrowserRouter>
         </CartProvider>

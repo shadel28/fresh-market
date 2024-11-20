@@ -29,12 +29,11 @@ function Cart() {
   const handleDialogClose = () => {
     reset();
     empymCart();
-    setIsDialogOpen(false); // Cerrar el diálogo
+    setIsDialogOpen(false);
   };
 
   const handleChange = (e) => {
     setSelectedPaymentMethod(e.target.value);
-    console.log("selectedPaymentMethod ", selectedPaymentMethod);
   };
 
   const { products, empymCart, clientId } = useContext(CartContext);
@@ -46,14 +45,9 @@ function Cart() {
 
   var itbis = (totals * 18) / 100;
 
-  // const { mutate: registerCustomer, isLoading, error } = useRegisterCustomer();
-
-  const { mutate: sendPayment, isLoading, error } = useSendPayment();
+  const { mutate: sendPayment } = useSendPayment();
 
   const handlePayment = (data) => {
-    console.log("Datos enviados: ", data);
-    console.log("Products: ", products);
-
     const factura = {
       id_cliente: clientId,
       id_metodo_pago: data.metodo,
@@ -67,7 +61,7 @@ function Cart() {
       })),
     };
 
-    sendPayment(factura); // Llama a la función que envía la solicitud al servidor
+    sendPayment({ paymentInfo: factura }); // Llama a la función que envía la solicitud al servidor
     setIsDialogOpen(true);
   };
 
@@ -247,7 +241,6 @@ function Cart() {
             <Button
               type="submit"
               sx={{
-                color: "#000",
                 fontWeight: "600",
                 width: "100%",
                 marginTop: "2rem",

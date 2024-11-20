@@ -12,7 +12,7 @@ import logo from "../../../assets/logo.png";
 import { CartContext } from "../../context/CartContext";
 
 function Header() {
-  const { productCount, products } = useContext(CartContext);
+  const { productCount } = useContext(CartContext);
   return (
     <header className="header">
       <img src={logo} alt="img" style={{ width: "100px" }} />

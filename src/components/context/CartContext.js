@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { useGetProducts } from "../../api/FreshMarket";
 
 export const CartContext = createContext();
 
@@ -37,12 +36,9 @@ export const CartProvider = ({ children }) => {
       // Si el producto no existe, lo agregamos al array
       setProducts([...products, p]);
     }
-
-    console.log("setProducts ", products);
   };
 
   const deleteProductFromCart = (id) => {
-    console.log("id aqui ", id);
     const newProducts = products.filter((item, index) => index !== id);
     setProducts(newProducts);
     setProductCount(productCount - 1);
@@ -71,8 +67,6 @@ export const CartProvider = ({ children }) => {
   const handleClientId = (id) => {
     setClientId(id);
   };
-
-  // products
 
   return (
     <CartContext.Provider

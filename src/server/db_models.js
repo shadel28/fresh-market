@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "./database.js";
-import { pagosSchema, proveedoresSchema } from "./schemas.js";
 // Simular las tablas y columnas de la DB
 
 export const Categorias = sequelize.define(
@@ -302,12 +301,6 @@ Inventario.belongsTo(Productos, { foreignKey: "id_producto" });
 
 OrdenesCompra.belongsTo(Proveedores, { foreignKey: "id_proveedor" });
 Proveedores.hasOne(OrdenesCompra, { foreignKey: "id_proveedor" });
-
-// DetalleOrdenCompra.belongsTo(OrdenesCompra, { foreignKey: "id_orden" });
-// OrdenesCompra.hasOne(DetalleOrdenCompra, { foreignKey: "id_orden" });
-
-// DetalleOrdenCompra.belongsTo(Productos, { foreignKey: "id_producto" });
-// Productos.hasOne(DetalleOrdenCompra, { foreignKey: "id_producto" });
 
 OrdenesCompra.hasMany(DetalleOrdenCompra, { foreignKey: "id_orden" });
 DetalleOrdenCompra.belongsTo(OrdenesCompra, { foreignKey: "id_orden" });
