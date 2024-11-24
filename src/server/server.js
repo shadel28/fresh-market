@@ -8,18 +8,10 @@ import {
   Inventario,
   OrdenesCompra,
   Pagos,
-  Productos,
   Services,
-  UnidadMedida,
   Usuario,
 } from "./db_models.js";
-import {
-  clientesSchema,
-  empleadosSchema,
-  ordenesCompraSchema,
-  pagosSchema,
-  usuarioSchema,
-} from "./schemas.js";
+import { clientesSchema, empleadosSchema, usuarioSchema } from "./schemas.js";
 import bcrypt from "bcrypt";
 import axios from "axios";
 import sequelize from "./database.js";
