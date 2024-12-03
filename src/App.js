@@ -17,6 +17,7 @@ const client = new QueryClient();
 function App() {
   return (
     <div className="App">
+      
       <QueryClientProvider client={client}>
         <CartProvider>
           <BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/purchases" element={<Purchases />} />
               <Route path="/supplier" element={<Supplier />} />
+              
             </Routes>
           </BrowserRouter>
         </CartProvider>

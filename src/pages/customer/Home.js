@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useGetProducts } from "../../api/FreshMarket";
 
 function Home() {
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todos');
   const { data: products = [] } = useGetProducts();
   const [categoria, setCategoria] = useState("Almacén");
 
@@ -19,7 +20,7 @@ function Home() {
   return (
     <>
       <header>
-        <Header />
+      <Header categoriaSeleccionada={categoriaSeleccionada} setCategoriaSeleccionada={setCategoriaSeleccionada} />
       </header>
       <main>
         <section className="banner">

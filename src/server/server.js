@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import {
   Clientes,
   DetalleOrdenCompra,
@@ -25,6 +26,12 @@ import axios from "axios";
 import sequelize from "./database.js";
 
 const app = express();
+app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Permite solicitudes solo desde tu frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
+}));
 
 app.use(express.json()); // Middleware para parsear JSON en el cuerpo de la solicitud
 
