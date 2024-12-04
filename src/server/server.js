@@ -12,6 +12,7 @@ import {
   Services,
   UnidadMedida,
   Usuario,
+  Proveedores,
 } from "./db_models.js";
 import {
   clientesSchema,
@@ -19,6 +20,7 @@ import {
   ordenesCompraSchema,
   pagosSchema,
   usuarioSchema,
+  proveedoresSchema,
 } from "./schemas.js";
 import bcrypt from "bcrypt";
 import axios from "axios";
@@ -427,6 +429,100 @@ app.get("/products/", async (req, res) => {
   } catch (error) {
     console.error("Error al traer productos e inventario", error);
     res.status(500).json({ error: "Error al traer los datos" });
+  }
+});
+
+app.get("/suppliers", async (req, res) => {
+  try {
+    const proveedores = await Proveedores.findAll();
+    res.status(200).json(proveedores);
+  } catch (error) {
+    console.error("Error al traer los proveedores", error);
+    res.status(500).json({error: "Error al traer los datos"})
+  }
+});
+
+app.post("/addSupplier", async (req, res) => {
+  const { nombre, no_telefono, correo } = req.body;
+  
+  const { error: proveedorError } = proveedoresSchema.validate({
+    nombre,
+    no_telefono,
+    correo
+  });
+
+  if (proveedorError) {
+    return res.status(400).json({ message: proveedorError.details[0].message });
+  }
+
+  try {
+    const nuevoProveedor = await Proveedores.create({
+      nombre,
+      no_telefono,
+      correo
+    });
+
+    return res.status(200).json({proveedor: nuevoProveedor});
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error al registrar el proveedor" });
+  }
+});
+
+app.delete("/deleteSupplier/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "El ID del proveedor es requerido" });
+  }
+
+  try {
+    const proveedor = await Proveedores.findByPk(id);
+
+    if (!proveedor) {
+      return res.status(404).json({ error: "Proveedor no encontrado" });
+    }
+
+    await proveedor.destroy();
+
+    res.status(200).json({ message: "Proveedor eliminado correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar el proveedor", error);
+    res.status(500).json({ error: "Error al eliminar el proveedor" });
+  }
+});
+
+app.put("/updateSupplier", async (req, res) => {
+  const { id, nombre, no_telefono, correo } = req.body;
+
+  const { error: proveedorError } = proveedoresSchema.validate({
+    nombre,
+    no_telefono,
+    correo
+  });
+
+  if (proveedorError) {
+    return res.status(400).json({ message: proveedorError.details[0].message });
+  }
+
+  try {
+    const proveedor = await Proveedores.findByPk(id);
+
+    if (!proveedor) {
+      return res.status(404).json({ message: "Proveedor no encontrado" });
+    }
+
+    const proveedorActualizado = await proveedor.update({
+      nombre,
+      no_telefono,
+      correo
+    });
+
+    return res.status(200).json({ proveedor: proveedorActualizado });
+
+  } catch (error) {
+    console.error("Error al actualizar el proveedor:", error);
+    return res.status(500).json({ message: "Error al actualizar el proveedor" });
   }
 });
 

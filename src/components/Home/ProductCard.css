@@ -34,3 +34,33 @@
 .product-name{
     font-weight: bold;
 }
+
+.quantity-button{
+    border: none;
+    background: none;
+    color: var(--main-color);
+    font-size: 15pt;
+}
+.quantity-input-group{
+    display: flex;
+    width: 50%;
+    height: 50px;
+    margin: auto;
+    border-radius: 5px;
+    justify-content: space-between;
+    padding: 0px 10px;
+    border: 1px solid var(--border-color);
+}
+.quantity-input{
+    text-align: center;
+    color: var(--main-color);
+    font-weight: bold;
+    border: none;
+    width: 30px;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -87,3 +87,61 @@ export const useLoginEmployee = () => {
     },
   });
 };
+
+// Proveedores
+
+const getSuppliers = async () => {
+  const response = await axios.get("/suppliers");
+  return response.data;
+};
+
+export const useGetSuppliers= () => {
+  return useQuery({
+    queryFn: getSuppliers,
+    onError: (error) => {
+      console.log("Error consultando proveedores", error);
+    },
+  });
+};
+/*
+export const addSupplier = async ({ supplierData }) => {
+  const response = await axios.post("/addSupplier")
+  return response.data;
+}
+
+export const useAddSupplier= () => {
+  return useQuery({
+    queryFn: addSupplier,
+    onError: (error) => {
+      console.log("Error añadiendo proveedor", error);
+    },
+  });
+};
+
+export const updateSupplier = async ({ supplierData }) => {
+  const response = await axios.put("/updateSupplier", supplierData)
+  return response.data;
+}
+
+export const useUpdateSupplier= () => {
+  return useQuery({
+    queryFn: updateSupplier,
+    onError: (error) => {
+      console.log("Error actualizando datos del proveedor ", error);
+    },
+  });
+};
+
+export const deleteSupplier = async ({ supplierId }) => {
+  const response = await axios.delete("/deleteSupplier")
+  return response.data;
+}
+
+export const useDeleteSupplier= () => {
+  return useQuery({
+    queryFn: deleteSupplier,
+    onError: (error) => {
+      console.log("Error eliminando proveedor", error);
+    },
+  });
+};*/
