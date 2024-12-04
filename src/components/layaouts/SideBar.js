@@ -1,35 +1,40 @@
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { Avatar } from "@mui/material";
+import {
+  Box,
+  Drawer,
+  CssBaseline,
+  Toolbar,
+  Typography,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Avatar,
+  AppBar,
+} from "@mui/material";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import StoreIcon from "@mui/icons-material/Store";
+import { Link, useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
-export default function PermanentDrawerLeft() {
+export default function SideBar({ currentPath }) {
   const [activeIndex, setActiveIndex] = useState(null);
+  const location = useLocation(); // Para obtener la ruta actual
 
   const toggleColors = (index) => {
     setActiveIndex(index);
   };
 
+  // Menú con rutas asociadas
   const menu = [
-    { text: "Inventario", icon: <Inventory2Icon /> },
-    { text: "Proveedores", icon: <LocalShippingIcon /> },
-    { text: "Pedidos", icon: <StoreIcon /> },
+    { text: "Inventario", icon: <Inventory2Icon />, route: "/inventory" },
+    { text: "Proveedores", icon: <LocalShippingIcon />, route: "/supplier" },
+    { text: "Pedidos", icon: <StoreIcon />, route: "/purchases" },
   ];
 
   return (
@@ -90,33 +95,42 @@ export default function PermanentDrawerLeft() {
         <Divider />
         <List>
           {menu.map((item, index) => (
-            <ListItem key={index} disablePadding sx={{ marginTop: "2rem" }}>
-              <ListItemButton onClick={() => toggleColors(index)}>
-                <ListItemIcon
-                  sx={{
-                    color: activeIndex === index ? "#198754" : "#000",
-                  }}
+            <Link
+              to={item.route} // Ruta asociada al menú
+              style={{
+                textDecoration: "none",
+                pointerEvents:
+                  location.pathname === item.route ? "none" : "auto", // Evitar clics en la ruta actual
+              }}
+              key={index}
+            >
+              <ListItem disablePadding sx={{ marginTop: "2rem" }}>
+                <ListItemButton
+                  onClick={() => toggleColors(index)}
+                  selected={location.pathname === item.route} // Estilo seleccionado
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{
-                    fontWeight: "700",
-                    color: activeIndex === index ? "#198754" : "#000",
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
+                  <ListItemIcon
+                    sx={{
+                      color:
+                        location.pathname === item.route ? "#198754" : "#000",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      fontWeight: "700",
+                      color:
+                        location.pathname === item.route ? "#198754" : "#000",
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>
-      {/* <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-      >
-        <Toolbar />
-      </Box> */}
     </Box>
   );
 }

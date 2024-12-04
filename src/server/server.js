@@ -8,45 +8,27 @@ import {
   Inventario,
   OrdenesCompra,
   Pagos,
+  Pedidos,
+  Productos,
+  Proveedores,
   Services,
   Usuario,
 } from "./db_models.js";
-import { clientesSchema, empleadosSchema, usuarioSchema } from "./schemas.js";
+import {
+  clientesSchema,
+  empleadosSchema,
+  inventarioSchema,
+  orderSchema,
+  usuarioSchema,
+} from "./schemas.js";
 import bcrypt from "bcrypt";
-import axios from "axios";
 import sequelize from "./database.js";
 
 const app = express();
 
 app.use(express.json()); // Middleware para parsear JSON en el cuerpo de la solicitud
 
-const validateRequest = async (service_api_key, nombre_service) => {
-  const authenticated_headers = await Services.findOne({
-    where: { service_api_key: service_api_key, nombre_service: nombre_service },
-  });
-
-  if (authenticated_headers) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-app.post("/server-register-customer", async (req, res) => {
-  const nombre_service = req.get("nombre_service");
-  const service_api_key = req.get("service_api_key");
-
-  if (!nombre_service || !service_api_key) {
-    return res.status(400).json({
-      message:
-        "Debe colocar los headers para request. Leer README.md para más información.",
-    });
-  }
-
-  if (!(await validateRequest(service_api_key, nombre_service))) {
-    return res.status(401).json({ message: "Request Invalido" });
-  }
-
+app.post("/register-customer/", async (req, res) => {
   const { nombre, apellido, cedula, direccion, correo, clave } = req.body;
   const saltRounds = 10;
 
@@ -100,21 +82,7 @@ app.post("/server-register-customer", async (req, res) => {
   }
 });
 
-app.post("/server-register-employee", async (req, res) => {
-  const nombre_service = req.get("nombre_service");
-  const service_api_key = req.get("service_api_key");
-
-  if (!nombre_service || !service_api_key) {
-    return res.status(400).json({
-      message:
-        "Debe colocar los headers para request. Leer README.md para más información.",
-    });
-  }
-
-  if (!(await validateRequest(service_api_key, nombre_service))) {
-    return res.status(401).json({ message: "Request Invalido" });
-  }
-
+app.post("/register-employee", async (req, res) => {
   const { nombre, apellido, puesto, correo, clave } = req.body;
   const saltRounds = 10;
 
@@ -135,7 +103,7 @@ app.post("/server-register-employee", async (req, res) => {
   }
 
   const correoAlreadyExists = await Usuario.findOne({
-    where: { correo },
+    where: { correo: correo, id_cliente: null },
   });
 
   if (correoAlreadyExists) {
@@ -166,21 +134,8 @@ app.post("/server-register-employee", async (req, res) => {
   }
 });
 
-app.post("/server-login-customer", async (req, res) => {
+app.post("/login-customer", async (req, res) => {
   try {
-    const nombre_service = req.get("nombre_service");
-    const service_api_key = req.get("service_api_key");
-    if (!nombre_service || !service_api_key) {
-      return res.status(400).json({
-        message:
-          "Debe colocar los headers para request. Leer README.md para más información.",
-      });
-    }
-
-    if (!(await validateRequest(service_api_key, nombre_service))) {
-      return res.status(401).json({ message: "Request Invalido" });
-    }
-
     const { correo, clave } = req.body;
     if (!correo || !clave) {
       return res
@@ -193,7 +148,9 @@ app.post("/server-login-customer", async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const cliente = await Usuario.findOne({ where: { correo } });
+    const cliente = await Usuario.findOne({
+      where: { correo: correo, id_empleado: null },
+    });
     if (!cliente) {
       return res.status(404).json({ message: "Cliente no encontrado" });
     }
@@ -209,47 +166,6 @@ app.post("/server-login-customer", async (req, res) => {
   } catch (err) {
     console.error("Error al iniciar sesion (cliente) ", err);
     res.status(500).json({ message: "Error al iniciar sesion (cliente) " });
-  }
-});
-
-// Ruta del frontend
-app.post("/login-customer", async (req, res) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/server-login-customer",
-      req.body,
-      {
-        headers: {
-          service_api_key: process.env.API_KEY,
-          nombre_service: process.env.SERVICE_NAME,
-        },
-      }
-    );
-    res.json(response.data);
-  } catch (error) {
-    console.log("Error en la solicitud para iniciar sesion ", error);
-    res
-      .status(500)
-      .json({ error: "Error en la solicitud para iniciar sesion" });
-  }
-});
-
-app.post("/register-customer", async (req, res) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/server-register-customer",
-      req.body,
-      {
-        headers: {
-          service_api_key: process.env.API_KEY,
-          nombre_service: process.env.SERVICE_NAME,
-        },
-      }
-    );
-    res.json(response.data);
-  } catch (error) {
-    console.log("Error en la solicitud para crear cliente ", error);
-    res.status(400).json({ error: "Error en la solicitud para crear cliente" });
   }
 });
 
@@ -409,7 +325,9 @@ app.get("/products/", async (req, res) => {
         JOIN
           unidad_medida ON productos.id_unidad_medida = unidad_medida.id_unidad_medida
         JOIN
-          categorias ON productos.id_categoria = categorias.id_categoria;
+          categorias ON productos.id_categoria = categorias.id_categoria
+        WHERE
+          inventario.cantidad_disponible > 0;
          `,
       {
         type: sequelize.QueryTypes.SELECT,
@@ -419,6 +337,141 @@ app.get("/products/", async (req, res) => {
   } catch (error) {
     console.error("Error al traer productos e inventario", error);
     res.status(500).json({ error: "Error al traer los datos" });
+  }
+});
+
+app.get("/suppliers/", async (req, res) => {
+  try {
+    const proveedores = await Proveedores.findAll();
+
+    res.status(200).json(proveedores);
+  } catch (error) {
+    console.log("Error desde server ", error);
+  }
+});
+
+app.post("/order/", async (req, res) => {
+  try {
+    const { id_producto, id_proveedor, cantidad, total } = req.body;
+    const { error: orderError } = orderSchema.validate({
+      id_producto,
+      id_proveedor,
+      cantidad,
+      total,
+    });
+
+    if (orderError) {
+      return res.status(400).json({ message: orderError.details[0].message });
+    }
+    const productoExists = await Productos.findOne({ where: { id_producto } });
+    if (!productoExists) {
+      return res.status(404).json({ message: "Este producto no existe." });
+    }
+
+    const proveedorExists = await Proveedores.findOne({
+      where: { id_proveedor },
+    });
+    if (!proveedorExists) {
+      return res
+        .status(404)
+        .json({ message: "Este proveedor no esta registrado." });
+    }
+    const order = await Pedidos.create({
+      id_proveedor,
+      id_producto,
+      cantidad,
+      total,
+    });
+
+    res.status(200).json(order);
+  } catch (error) {
+    console.error("Error al crear pedido ", error);
+  }
+});
+
+app.get("/orders/", async (req, res) => {
+  try {
+    const orders = await sequelize.query(
+      `SELECT 
+         pedidos.id_producto,
+         pedidos.id_proveedor,
+         pedidos.cantidad,
+         pedidos.total,
+         productos.nombre,
+         productos.id_categoria,
+         productos.imagen_url,
+         proveedores.nombre_proveedor,
+         inventario.precio_unitario,
+         categorias.nombre_categoria
+       FROM 
+         pedidos
+       JOIN 
+         productos ON pedidos.id_producto = productos.id_producto
+        JOIN
+          unidad_medida ON productos.id_unidad_medida = unidad_medida.id_unidad_medida
+        JOIN
+          categorias ON productos.id_categoria = categorias.id_categoria
+        JOIN
+          inventario ON productos.id_producto = inventario.id_producto
+        JOIN
+          proveedores ON pedidos.id_proveedor = proveedores.id_proveedor;
+         `,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      }
+    );
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error consultando pedidos ", error);
+  }
+});
+
+app.put("/update-quantity/", async (req, res) => {
+  try {
+    const { id_producto, cantidad_disponible } = req.body;
+    const t = await sequelize.transaction();
+    const { error: inventarioError } = inventarioSchema.validate({
+      id_producto,
+      cantidad_disponible,
+    });
+    console.log(
+      "id_producto ",
+      id_producto,
+      "cantidad_disponible",
+      cantidad_disponible
+    );
+
+    if (inventarioError) {
+      return res
+        .status(400)
+        .json({ message: inventarioError.details[0].message });
+    }
+    const productoExists = await Productos.findOne({ where: { id_producto } });
+    if (!productoExists) {
+      return res.status(404).json({ message: "Este producto no existe." });
+    }
+
+    const updateQuantity = await Inventario.increment(
+      "cantidad_disponible",
+      {
+        by: cantidad_disponible,
+        where: { id_producto: id_producto },
+      },
+      { transaction: t }
+    );
+    const pedido2 = await Pedidos.findOne({
+      where: { id_producto: id_producto },
+    });
+    console.log("pedido2 ", pedido2);
+    // crear columna "estado" y actualizar en caso de que se confirme.
+    const deletedPedido = await Pedidos.destroy({
+      where: { id_producto: id_producto },
+    });
+    console.log("deletedPedido ", deletedPedido);
+    res.status(200).json({ message: "Cantidad actualizada" });
+  } catch (error) {
+    await t.rollback();
+    console.err("Error al actualizar inventario ", error);
   }
 });
 

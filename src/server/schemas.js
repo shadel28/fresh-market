@@ -53,8 +53,15 @@ export const facturassSchema = Joi.object({
 });
 
 export const inventarioSchema = Joi.object({
+  id_producto: Joi.number().integer().required(),
   cantidad_disponible: Joi.number().integer().required(),
-  precio_unitario: Joi.number().precision(2).positive().required(),
+  precio_unitario: Joi.number()
+    .precision(2)
+    .positive()
+    .when("cantidad_disponible", {
+      is: Joi.exist(),
+      then: Joi.optional(),
+    }),
 });
 
 export const metodoPagoSchema = Joi.object({
@@ -84,9 +91,9 @@ export const productosSchema = Joi.object({
 });
 
 export const proveedoresSchema = Joi.object({
-  nombre: Joi.string().min(3).max(100).required(),
+  nombre_proveedor: Joi.string().min(3).max(100).required(),
   no_telefono: Joi.string().min(3).max(100).required(),
-  correo: Joi.string().min(3).max(100).required(),
+  correo_proveedor: Joi.string().min(3).max(100).required(),
 });
 
 export const servicesSchema = Joi.object({
@@ -104,4 +111,11 @@ export const usuarioSchema = Joi.object({
   id_empleado: Joi.number().integer(),
   correo: Joi.string().min(3).max(30).required(),
   clave: Joi.string().required(),
+});
+
+export const orderSchema = Joi.object({
+  id_proveedor: Joi.number().integer(),
+  id_producto: Joi.number().integer(),
+  cantidad: Joi.number().precision(2).positive().required(),
+  total: Joi.number().precision(2).positive().required(),
 });

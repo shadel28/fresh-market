@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { FormControl, FormLabel, Button, Typography, Box } from "@mui/material";
+import {
+  FormControl,
+  FormLabel,
+  Button,
+  Typography,
+  Box,
+  Alert,
+} from "@mui/material";
 import "../customer/customer.css";
 
 import IconButton from "@mui/material/IconButton";
@@ -26,7 +33,7 @@ function LoginEmployee() {
 
   const { register, handleSubmit } = useForm();
 
-  const { mutate: loginEmployee, isLoading, error } = useLoginEmployee();
+  const { mutate: loginEmployee, error } = useLoginEmployee();
 
   const { handleClientId } = useContext(CartContext);
 
@@ -43,9 +50,6 @@ function LoginEmployee() {
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div> Error iniciando sesion {error.message}.</div>;
-
   return (
     <section className="customer__section">
       <Box
@@ -60,6 +64,11 @@ function LoginEmployee() {
           padding: "4rem 6rem",
         }}
       >
+        {error && (
+          <Alert severity="error" color="error">
+            {error.response.data.message}
+          </Alert>
+        )}
         <Typography fontSize="1.7rem" fontWeight="700">
           Bienvenido de vuelta, admin
         </Typography>
