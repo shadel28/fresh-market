@@ -86,7 +86,7 @@ function Home() {
               )
             )}
           </div>
-          <div className="product-cards row my-5 py-4">
+          <div className="cards-container my-5 py-4">
             {products
               .filter((p) => p.nombre_categoria === categoria)
               .slice(0, 5)

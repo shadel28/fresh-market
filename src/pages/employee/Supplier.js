@@ -1,9 +1,16 @@
 // Esta es la pagina de proveedores
 import React from "react";
-import SideBar from "../../components/layaouts/SideBar";
 import { Container, Box, Typography, Button, Toolbar } from "@mui/material";
-
+import SideBar from "../../components/layaouts/SideBar";
+import DataTable from "../../components/layaouts/Suppliers_DataTable";
 function Supplier() {
+  const fields = [
+    { fieldName: "nombre", columnName: "Nombre", width: 250 },
+    { fieldName: "no_telefono", columnName: "Telefono", width: 150 },
+    { fieldName: "correo", columnName: "Correo", width: 250 },
+    { fieldName: "actions", columnName: "Acciones", width: 250 },
+  ];
+
   return (
     <Container
       sx={{
@@ -40,6 +47,7 @@ function Supplier() {
           </Button>
         </Box>
       </Toolbar>
+      <DataTable props={fields} />
     </Container>
   );
 }
