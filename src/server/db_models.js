@@ -220,9 +220,9 @@ export const Proveedores = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    nombre: { type: DataTypes.STRING(100), allowNull: false },
+    nombre_proveedor: { type: DataTypes.STRING(100), allowNull: false },
     no_telefono: { type: DataTypes.STRING(100), allowNull: false },
-    correo: { type: DataTypes.STRING(100), allowNull: false },
+    correo_proveedor: { type: DataTypes.STRING(100), allowNull: false },
   },
   { timestamps: false }
 );
@@ -290,6 +290,29 @@ export const Usuario = sequelize.define(
   { timestamps: false }
 );
 
+export const Pedidos = sequelize.define(
+  "pedidos",
+  {
+    id_pedido: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    id_proveedor: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    id_producto: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    cantidad: { type: DataTypes.INTEGER, allowNull: false },
+    total: { type: DataTypes.DOUBLE, allowNull: false },
+  },
+  { timestamps: false }
+);
+
 Clientes.hasOne(Usuario, { foreignKey: "id_cliente" });
 Usuario.belongsTo(Clientes, { foreignKey: "id_cliente" });
 
@@ -334,3 +357,9 @@ Productos.belongsTo(Categorias, { foreignKey: "id_categoria" });
 
 UnidadMedida.belongsTo(Productos, { foreignKey: "id_unidad_medida" });
 Productos.belongsTo(UnidadMedida, { foreignKey: "id_unidad_medida" });
+
+Pedidos.hasOne(Proveedores, { foreignKey: "id_proveedor" });
+Proveedores.belongsTo(Pedidos, { foreignKey: "id_proveedor" });
+
+Pedidos.hasOne(Productos, { foreignKey: "id_producto" });
+Productos.belongsTo(Pedidos, { foreignKey: "id_producto" });

@@ -4,17 +4,22 @@ import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+
 import { Box } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function MyFullScreenDialog({ open, onClose }) {
+export default function ScreenDialog({
+  open,
+  onClose,
+  screenSize,
+  dialogContent,
+}) {
   return (
     <Dialog
-      fullScreen
+      fullScreen={screenSize}
       open={open}
       onClose={onClose}
       TransitionComponent={Transition}
@@ -37,9 +42,7 @@ export default function MyFullScreenDialog({ open, onClose }) {
           <CloseIcon sx={{ fontSize: "2rem" }} />
         </IconButton>
       </AppBar>
-      <Box sx={{ marginTop: "10rem" }}>
-        <CheckCircleOutlineIcon sx={{ fontSize: "14rem", color: "#198754" }} />
-      </Box>
+      <Box sx={{ marginTop: "10rem" }}>{dialogContent}</Box>
     </Dialog>
   );
 }

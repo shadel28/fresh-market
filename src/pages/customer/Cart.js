@@ -14,8 +14,9 @@ import { FormControl, FormLabel, Button, Typography } from "@mui/material";
 import Select from "@mui/material/Select";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { CartContext } from "../../components/context/CartContext";
-import MyFullScreenDialog from "../../components/ProcessPayment";
+import ScreenDialog from "../../components/ScreenDialog";
 import { useSendPayment } from "../../api/FreshMarket";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function Cart() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -137,12 +138,22 @@ function Cart() {
                 {...register("metodo")}
                 onChange={handleChange}
               >
-                <MenuItem value="1">Efectivo</MenuItem>{" "}
+                <MenuItem value="1" key={1}>
+                  Efectivo
+                </MenuItem>{" "}
                 {/*para mas simplicidad los valores seran id_metodo_pago */}
-                <MenuItem value="2">Tarjeta de débito</MenuItem>
-                <MenuItem value="3">Tarjeta de crédito</MenuItem>
-                <MenuItem value="4">Paypal</MenuItem>
-                <MenuItem value="5">Puntos FreshMarket</MenuItem>
+                <MenuItem value="2" key={2}>
+                  Tarjeta de débito
+                </MenuItem>
+                <MenuItem value="3" key={3}>
+                  Tarjeta de crédito
+                </MenuItem>
+                <MenuItem value="4" key={4}>
+                  Paypal
+                </MenuItem>
+                <MenuItem value="5" key={5}>
+                  Puntos FreshMarket
+                </MenuItem>
               </Select>
             </FormControl>
 
@@ -264,10 +275,16 @@ function Cart() {
       <Footer />
 
       {/* Renderizar el diálogo */}
-      <MyFullScreenDialog
+      <ScreenDialog
         open={isDialogOpen}
         onClose={handleDialogClose}
         aria-hidden={!isDialogOpen ? "true" : undefined}
+        screenSize={true}
+        dialogContent={
+          <CheckCircleOutlineIcon
+            sx={{ fontSize: "14rem", color: "#198754" }}
+          />
+        }
       />
     </>
   );
