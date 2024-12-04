@@ -255,10 +255,19 @@ main{
     color: #000; 
 }
 
-.product-cards{
+/* .product-cards{
     gap:20px;
+} */
+.cards-container {
+  display: flex; /* Activa diseño flexible */
+  flex-wrap: wrap; /* Permite que las tarjetas pasen a la siguiente fila si no hay espacio */
+  justify-content: space-around; /* Espacio uniforme entre las tarjetas */
+  gap: 1rem; /* Espacio entre las tarjetas */
+  padding: 1rem; /* Espaciado interno del contenedor */
+  background-color: #fff; /* Cambia esto según tu diseño */
 }
 
+  
 .card-img{
     margin: 0 auto !important;
 }

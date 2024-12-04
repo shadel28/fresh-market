@@ -28,16 +28,16 @@ export default function ProductCard(props) {
   };
   const increase = () => {
     setQuantity(quantity + 1);
-  }
+  };
 
   const decrease = () => {
-    if(quantity > 0){
+    if (quantity > 0) {
       setQuantity(quantity - 1);
     }
-  }
+  };
 
   return (
-    <>
+    <div className="product-card">
       <Card className="prod-card">
         {showAlert && (
           <Alert severity="error" onClose={() => setShowAlert(false)}>
@@ -63,15 +63,19 @@ export default function ProductCard(props) {
         </div>
         <div className="opciones">
           <div className="quantity-input-group">
-              <button className='quantity-button' onClick={decrease}>-</button>
-              <input 
-                className="quantity-input" 
-                type="number" 
-                min="0" 
-                value={quantity} 
-                onChange={(e) => setQuantity(Number(e.target.value))}
-              />
-              <button className='quantity-button' onClick={increase}>+</button>
+            <button className="quantity-button" onClick={decrease}>
+              -
+            </button>
+            <input
+              className="quantity-input"
+              type="number"
+              min="0"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+            <button className="quantity-button" onClick={increase}>
+              +
+            </button>
           </div>
           <Button
             className="addToCart-btn"
@@ -82,6 +86,6 @@ export default function ProductCard(props) {
           </Button>
         </div>
       </Card>
-    </>
+    </div>
   );
 }

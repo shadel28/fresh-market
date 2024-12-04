@@ -1,10 +1,13 @@
 .prod-card{
-    width: 18% !important;
+    width: 15rem !important;
+    height: 20rem!important;
     display: flex ;
     flex-direction: column ;
-    padding-bottom: 2rem;
+    padding: 0 2rem 2rem 2rem;
+    align-items: center;
+    justify-content: center;
 }
-
+  
 .btn.btn-light{
     border-radius: 50px ;
     border: 1px solid #36802d ;
@@ -18,7 +21,7 @@
 .opciones{
     display:flex ;
     flex-direction: row ;
-    gap: 5px;
+    gap: 10px;
 }
 .opciones input{
     width: 30% ;
@@ -41,7 +44,8 @@
     color: var(--main-color);
     font-size: 15pt;
 }
-.quantity-input-group{
+/* Específico para ProductCard */
+.product-card .quantity-input-group {
     display: flex;
     width: 50%;
     height: 50px;
@@ -50,17 +54,27 @@
     justify-content: space-between;
     padding: 0px 10px;
     border: 1px solid var(--border-color);
-}
-.quantity-input{
+  }
+  
+  .product-card .quantity-input {
     text-align: center;
     color: var(--main-color);
     font-weight: bold;
     border: none;
     width: 30px;
-}
-
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
+  }
+  
+  .product-card .quantity-button {
+    border: none;
+    background: none;
+    color: var(--main-color);
+    font-size: 15pt;
+  }
+  
+  /* Remover los botones de incremento/decremento en inputs de tipo numérico */
+  .product-card input[type="number"]::-webkit-outer-spin-button,
+  .product-card input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
+  }
+  

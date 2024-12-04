@@ -26,6 +26,7 @@ function CardProduct() {
               <span>RD${product.price}</span>
               <input
                 type="number"
+                min="0"
                 value={product.quantity}
                 onChange={(e) => handleQuantityChange(index, e.target.value)}
               />

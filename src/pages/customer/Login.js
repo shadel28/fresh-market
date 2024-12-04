@@ -6,6 +6,7 @@ import {
   Divider,
   Typography,
   Box,
+  Alert,
 } from "@mui/material";
 import "./customer.css";
 import { Link } from "react-router-dom";
@@ -51,9 +52,6 @@ function Login() {
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div> Error iniciando sesion {error.message}.</div>;
-
   return (
     <section className="customer__section">
       <Box
@@ -68,6 +66,11 @@ function Login() {
           padding: "4rem 6rem",
         }}
       >
+        {error && (
+          <Alert severity="error" color="error">
+            {error.response.data.message}
+          </Alert>
+        )}
         <Typography fontSize="1.7rem" fontWeight="700">
           Bienvenido de vuelta
         </Typography>
