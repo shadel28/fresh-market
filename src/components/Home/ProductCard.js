@@ -78,9 +78,10 @@ export default function ProductCard(props) {
             </button>
           </div>
           <Button
-            className="addToCart-btn"
+            sx={{ fontSize: "10px" }}
             variant="success"
             onClick={handleAddToCart}
+            size="sm"
           >
             Comprar
           </Button>

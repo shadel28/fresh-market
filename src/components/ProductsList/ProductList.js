@@ -1,102 +1,85 @@
-import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import React, { useContext } from "react";
+import { useGetProducts } from "../../api/FreshMarket";
+import ProductCarousel from "../PromotionalBanner/ProductCarousel";
+import { CartContext } from "../context/CartContext";
 
+function ProductList({
+  categoriaSeleccionada,
+  showAll,
+  showOfertas,
+  showNuevos,
+  minPrecio,
+  maxPrecio,
+}) {
+  const { data: productos = [], isLoading, error } = useGetProducts();
+  const { addProductToCart } = useContext(CartContext); // Accede al contexto del carrito
 
-function ProductList(){
-   
-  return(
-    <Carousel indicators={false}>
-          <Carousel.Item>
-            <div className="row w-100">
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Queso Místico" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Habichuelas</h5>
-                    <p className="card-text">$0.99</p>
-                  </div>
-                </div>
+  const filtrarProductos = (productos) => {
+    return productos.filter((p) => {
+      const cumpleCategoria =
+        categoriaSeleccionada === "Todos" ||
+        p.nombre_categoria === categoriaSeleccionada;
+      const cumpleOferta = !showOfertas || p.oferta;
+      const cumpleNuevo = !showNuevos || p.nuevo;
+      const cumplePrecioMin =
+        minPrecio === "" || p.precio_unitario >= parseFloat(minPrecio);
+      const cumplePrecioMax =
+        maxPrecio === "" || p.precio_unitario <= parseFloat(maxPrecio);
+
+      return (
+        cumpleCategoria &&
+        cumpleOferta &&
+        cumpleNuevo &&
+        cumplePrecioMin &&
+        cumplePrecioMax
+      );
+    });
+  };
+
+  const handleAddToCart = (producto, cantidadSeleccionada) => {
+    const productoConCantidad = {
+      ...producto,
+      quantity: cantidadSeleccionada,
+    };
+    addProductToCart(productoConCantidad); // Usa la lógica del contexto
+  };
+
+  if (isLoading) return <p>Cargando productos...</p>;
+  if (error) return <p>Ocurrió un error al cargar los productos.</p>;
+
+  const categorias = [
+    "Almacén",
+    "Bebidas",
+    "Lácteos",
+    "Carnes & Pescados",
+    "Frutas & Verduras",
+    "Panadería",
+    "Congelados",
+    "Limpieza",
+  ];
+
+  return (
+    <div className="products-list">
+      {productos.length > 0 &&
+        categorias.map(
+          (categoria) =>
+            (categoriaSeleccionada === "Todos" ||
+              categoriaSeleccionada === categoria) && (
+              <div key={categoria}>
+                <h2>{categoria}</h2>
+                <ProductCarousel
+                  productos={filtrarProductos(
+                    productos.filter((p) => p.nombre_categoria === categoria)
+                  )}
+                  addToCart={(producto, cantidad) =>
+                    handleAddToCart(producto, cantidad)
+                  }
+                />
               </div>
-
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Queso Burrata" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Azucar</h5>
-                    <p className="card-text">$0.90</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Rebanadas de Cheddar Clásico" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Leche</h5>
-                    <p className="card-text">$1.20</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Queso Azul Gorgonzola Piccante" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Queso</h5>
-                    <p className="card-text">$1.50</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <div className="row w-100">
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Queso Místico" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Habichuelas</h5>
-                    <p className="card-text">$0.99</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Queso Burrata" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Azucar</h5>
-                    <p className="card-text">$0.90</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Rebanadas de Cheddar Clásico" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Leche</h5>
-                    <p className="card-text">$1.20</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="card w-75" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <img src="/images/apple.png" className="card-img-top" alt="Queso Azul Gorgonzola Piccante" style={{objectFit: 'cover', width: '110px'}}/>
-                  <div className="card-body">
-                    <h5 className="card-title">Queso</h5>
-                    <p className="card-text">$1.50</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Carousel.Item>
-    </Carousel>
+            )
+        )}
+    </div>
   );
-    
-  
 }
-export default ProductList;
 
+export default ProductList;

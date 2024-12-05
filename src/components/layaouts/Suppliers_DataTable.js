@@ -27,16 +27,16 @@ export default function DataTable({ props }) {
   const getProveedores = () =>
     proveedores.map((p, index) => ({
       id: p.id_proveedor,
-      nombre: p.nombre_proveedor,
+      nombre_proveedor: p.nombre_proveedor,
       no_telefono: p.no_telefono,
-      correo: p.correo_proveedor,
+      correo_proveedor: p.correo_proveedor,
     }));
 
   const [currentRow, setCurrentRow] = useState({
     id: "",
-    nombre: "",
+    nombre_proveedor: "",
     no_telefono: "",
-    correo: "",
+    correo_proveedor: "",
   }); // Para tomar los datos del row
   const [open, setOpen] = useState(false); // Para el dialog (modal)
   const [isEditing, setIsEditing] = useState(false); // Para ver si se está editando o registrando
@@ -52,7 +52,12 @@ export default function DataTable({ props }) {
   const handleDialog = () => {
     setOpen(!open);
     if (!open)
-      setCurrentRow({ id: "", nombre: "", no_telefono: "", correo: "" });
+      setCurrentRow({
+        id: "",
+        nombre_proveedor: "",
+        no_telefono: "",
+        correo_proveedor: "",
+      });
   };
   const handleEditClick = (row) => {
     setCurrentRow(row);
@@ -105,7 +110,10 @@ export default function DataTable({ props }) {
         message: "Error al modificar el proveedor.",
         severity: "error",
       });
-      console.error("Error al modificar el proveedor:", error);
+      console.log(
+        "Error al modificar el proveedor:",
+        error.response.data.message
+      );
     }
     setOpen(false);
   };
@@ -224,7 +232,7 @@ export default function DataTable({ props }) {
         />
       </Paper>
 
-      <Dialog open={open}>
+      {/* <Dialog open={open}>
         <DialogTitle>
           {isEditing ? "Editar Proveedor" : "Añadir Proveedor"}
         </DialogTitle>
@@ -236,7 +244,7 @@ export default function DataTable({ props }) {
             label="Nombre"
             fullWidth
             variant="outlined"
-            value={currentRow.nombre}
+            value={currentRow.nombre_proveedor}
             onChange={handleChange}
           />
           <TextField
@@ -255,7 +263,50 @@ export default function DataTable({ props }) {
             label="Correo"
             fullWidth
             variant="outlined"
-            value={currentRow.correo}
+            value={currentRow.correo_proveedor}
+            onChange={handleChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialog} sx={{ color: "red" }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleSave} color="primary">
+            Guardar
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+      <Dialog open={open}>
+        <DialogTitle>
+          {isEditing ? "Editar Proveedor" : "Añadir Proveedor"}
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            name="nombre_proveedor" // Cambiado para que coincida con el estado
+            label="Nombre"
+            fullWidth
+            variant="outlined"
+            value={currentRow.nombre_proveedor} // Usa el estado
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            name="no_telefono" // Cambiado para que coincida con el estado
+            label="Teléfono"
+            fullWidth
+            variant="outlined"
+            value={currentRow.no_telefono} // Usa el estado
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            name="correo_proveedor" // Cambiado para que coincida con el estado
+            label="Correo"
+            fullWidth
+            variant="outlined"
+            value={currentRow.correo_proveedor} // Usa el estado
             onChange={handleChange}
           />
         </DialogContent>

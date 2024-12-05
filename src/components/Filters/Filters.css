@@ -1,3 +1,36 @@
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 300px;
+  margin: auto;
+  margin-top: 09%;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-input {
+  width: 80px;
+  padding: 0.2rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .toggle-wrapper {
   display: flex;
   justify-content: center;
@@ -63,4 +96,84 @@
   width: .125em;
   height: .125em;
   background-color: #c4c4c4;
+}
+
+.made-in-rd {
+  font-size: 0.8rem;
+  color: #333;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.price-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 48%;
+}
+
+.price-input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.categories-container {
+  display: flex;
+  flex-direction: column;  /* Organiza los enlaces uno debajo del otro */
+  gap: 0.8rem;  /* Espaciado entre los enlaces */
+  margin-top: 0.5rem;
+}
+
+.category-link {
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: #007bff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.category-link:hover {
+  color: #0056b3;
+  transform: scale(1.05);  /* Efecto de aumento al pasar el ratón */
+}
+
+.category-link.selected {
+  font-weight: bold;
+  color: #28a745;
+  border-bottom: 2px solid #28a745;
+}
+
+.category-link:active {
+  color: #003366;
+}
+
+label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
 }

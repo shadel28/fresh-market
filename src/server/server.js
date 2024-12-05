@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   Clientes,
   DetalleOrdenCompra,
@@ -536,12 +537,12 @@ app.delete("/deleteSupplier/:id", async (req, res) => {
 });
 
 app.put("/updateSupplier", async (req, res) => {
-  const { id, nombre, no_telefono, correo } = req.body;
+  const { id, nombre_proveedor, no_telefono, correo_proveedor } = req.body;
 
   const { error: proveedorError } = proveedoresSchema.validate({
-    nombre,
+    nombre_proveedor,
     no_telefono,
-    correo,
+    correo_proveedor,
   });
 
   if (proveedorError) {
@@ -556,9 +557,9 @@ app.put("/updateSupplier", async (req, res) => {
     }
 
     const proveedorActualizado = await proveedor.update({
-      nombre,
+      nombre_proveedor,
       no_telefono,
-      correo,
+      correo_proveedor,
     });
 
     return res.status(200).json({ proveedor: proveedorActualizado });
