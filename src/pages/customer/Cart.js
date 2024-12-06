@@ -50,7 +50,6 @@ function Cart() {
 
   const handlePayment = (data) => {
     const factura = {
-      id_cliente: clientId,
       id_metodo_pago: data.metodo,
       subtotal: totals,
       total: totals + itbis,

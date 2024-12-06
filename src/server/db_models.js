@@ -49,26 +49,6 @@ export const Empleados = sequelize.define(
   { timestamps: false }
 );
 
-export const DetalleOrdenCompra = sequelize.define(
-  "detalle_orden_compra",
-  {
-    id_orden: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    id_producto: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-    },
-    precio_unidad_compra: { type: DataTypes.DOUBLE, allowNull: false },
-    cantidad: { type: DataTypes.INTEGER, allowNull: false },
-  },
-  { timestamps: false }
-);
-
 export const DetallesFactura = sequelize.define(
   "detalles_factura",
   {
@@ -79,34 +59,6 @@ export const DetallesFactura = sequelize.define(
       primaryKey: true,
     },
     cantidad_vendida: { type: DataTypes.INTEGER, allowNull: false },
-  },
-  { timestamps: false }
-);
-
-export const EstadoFacturas = sequelize.define(
-  "estado_facturas",
-  {
-    id_factura: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-    id_estado: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-    },
-    monto_pendiente: { type: DataTypes.DOUBLE, allowNull: false },
-  },
-  { timestamps: false }
-);
-
-export const Estados = sequelize.define(
-  "estados",
-  {
-    id_estado: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    nombre_estado: { type: DataTypes.STRING(100), allowNull: false },
   },
   { timestamps: false }
 );
@@ -159,25 +111,6 @@ export const MetodoPago = sequelize.define(
   { timestamps: false }
 );
 
-export const OrdenesCompra = sequelize.define(
-  "ordenes_compra",
-  {
-    id_orden: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    id_proveedor: { type: DataTypes.INTEGER, allowNull: false },
-    fecha_emision: { type: DataTypes.DATE, allowNull: false },
-    subtotalfactura: { type: DataTypes.DOUBLE, allowNull: false },
-    descuento: { type: DataTypes.DOUBLE, allowNull: false },
-    itbis: { type: DataTypes.DOUBLE, allowNull: false },
-    total_facturado: { type: DataTypes.DOUBLE, allowNull: false },
-  },
-  { timestamps: false }
-);
-
 export const Pagos = sequelize.define(
   "pagos",
   {
@@ -223,16 +156,6 @@ export const Proveedores = sequelize.define(
     nombre_proveedor: { type: DataTypes.STRING(100), allowNull: false },
     no_telefono: { type: DataTypes.STRING(100), allowNull: false },
     correo_proveedor: { type: DataTypes.STRING(100), allowNull: false },
-  },
-  { timestamps: false }
-);
-
-export const Services = sequelize.define(
-  "services",
-  {
-    service_id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-    service_api_key: { type: DataTypes.STRING(100), allowNull: false },
-    nombre_service: { type: DataTypes.STRING, allowNull: false },
   },
   { timestamps: false }
 );
@@ -322,15 +245,6 @@ Usuario.belongsTo(Empleados, { foreignKey: "id_empleado" });
 Productos.hasOne(Inventario, { foreignKey: "id_producto" });
 Inventario.belongsTo(Productos, { foreignKey: "id_producto" });
 
-OrdenesCompra.belongsTo(Proveedores, { foreignKey: "id_proveedor" });
-Proveedores.hasOne(OrdenesCompra, { foreignKey: "id_proveedor" });
-
-OrdenesCompra.hasMany(DetalleOrdenCompra, { foreignKey: "id_orden" });
-DetalleOrdenCompra.belongsTo(OrdenesCompra, { foreignKey: "id_orden" });
-
-DetalleOrdenCompra.belongsTo(Productos, { foreignKey: "id_producto" });
-Productos.hasMany(DetalleOrdenCompra, { foreignKey: "id_producto" });
-
 Facturas.belongsTo(Clientes, { foreignKey: "id_cliente" });
 Clientes.hasOne(Facturas, { foreignKey: "id_cliente" });
 
@@ -342,9 +256,6 @@ Facturas.hasOne(DetallesFactura, { foreignKey: "id_factura" });
 
 DetallesFactura.belongsTo(Productos, { foreignKey: "id_producto" });
 Productos.hasOne(DetallesFactura, { foreignKey: "id_producto" });
-
-EstadoFacturas.belongsTo(Estados, { foreignKey: "id_estado" });
-Estados.belongsTo(EstadoFacturas, { foreignKey: "id_estado" });
 
 Pagos.belongsTo(Facturas, { foreignKey: "id_factura" });
 Facturas.belongsTo(Pagos, { foreignKey: "id_factura" });

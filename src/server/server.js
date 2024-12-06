@@ -2,17 +2,14 @@ import express from "express";
 
 import {
   Clientes,
-  DetalleOrdenCompra,
   DetallesFactura,
   Empleados,
   Facturas,
   Inventario,
-  OrdenesCompra,
   Pagos,
   Pedidos,
   Productos,
   Proveedores,
-  Services,
   Usuario,
 } from "./db_models.js";
 import {
@@ -212,14 +209,13 @@ app.post("/payment", async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
-    const { id_cliente, id_metodo_pago, subtotal, total, itbis, productos } =
-      req.body;
+    const { id_metodo_pago, subtotal, total, itbis, productos } = req.body;
 
     const timestamp = new Date().toISOString().slice(0, -1);
 
     const factura = await Facturas.create(
       {
-        id_cliente,
+        id_cliente: 10,
         id_empleado: 1, // hardcoded por ahora
         fecha: timestamp,
         subtotal_factura: subtotal,
@@ -240,18 +236,6 @@ app.post("/payment", async (req, res) => {
       { transaction: t }
     );
 
-    const orden = await OrdenesCompra.create(
-      {
-        id_proveedor: 1, // hardcoded por ahora
-        fecha_emision: timestamp,
-        subtotalfactura: subtotal,
-        descuento: 0,
-        itbis,
-        total_facturado: total,
-      },
-      { transaction: t }
-    );
-
     // Insertar múltiples productos y actualizar inventario
     for (const producto of productos) {
       const existingProduct = await Inventario.findOne(
@@ -267,16 +251,6 @@ app.post("/payment", async (req, res) => {
           message: "out of stock",
         });
       } else {
-        await DetalleOrdenCompra.create(
-          {
-            id_orden: orden.id_orden,
-            id_producto: producto.id_producto,
-            precio_unidad_compra: producto.precio_unitario,
-            cantidad: producto.cantidad,
-          },
-          { transaction: t }
-        );
-
         await DetallesFactura.create(
           {
             id_factura: factura.id_factura,

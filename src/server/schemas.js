@@ -17,28 +17,10 @@ export const empleadosSchema = Joi.object({
   puesto: Joi.string().min(3).max(30).required(),
 });
 
-export const detalleOrdenCompraSchema = Joi.object({
-  id_orden: Joi.number().integer().required(),
-  id_producto: Joi.number().integer().required(),
-  precio_unidad_compra: Joi.number().precision(2).positive().required(),
-  cantidad: Joi.number().integer().required(),
-});
-
 export const detallesFacturaSchema = Joi.object({
   id_factura: Joi.number().integer().required(),
   id_producto: Joi.number().integer().required(),
   cantidad_vendida: Joi.number().integer().required(),
-});
-
-export const estadoFacturasSchema = Joi.object({
-  id_factura: Joi.number().integer().required(),
-  id_estado: Joi.number().integer().required(),
-  monto_pendiente: Joi.number().precision(2).positive().required(),
-});
-
-export const estadosSchema = Joi.object({
-  id_estado: Joi.number().integer().required(),
-  nombre_estado: Joi.string().min(3).max(30).required(),
 });
 
 export const facturassSchema = Joi.object({
@@ -68,15 +50,6 @@ export const metodoPagoSchema = Joi.object({
   nombre: Joi.string().min(3).max(30).required(),
 });
 
-export const ordenesCompraSchema = Joi.object({
-  id_proveedor: Joi.number().integer().required(),
-  fecha_emision: Joi.date().required(),
-  subtotal_factura: Joi.number().precision(2).positive().required(),
-  descuento: Joi.number().precision(2).positive().required(),
-  itbis: Joi.number().precision(2).positive().required(),
-  total_facturado: Joi.number().precision(2).positive().required(),
-});
-
 export const pagosSchema = Joi.object({
   id_factura: Joi.number().integer().required(),
   id_metodo_pago: Joi.number().integer().required(),
@@ -94,12 +67,6 @@ export const proveedoresSchema = Joi.object({
   nombre_proveedor: Joi.string().min(3).max(100).required(),
   no_telefono: Joi.string().min(3).max(100).required(),
   correo_proveedor: Joi.string().min(3).max(100).required(),
-});
-
-export const servicesSchema = Joi.object({
-  service_id: Joi.number().integer().required(),
-  service_api_key: Joi.string().min(3).required(),
-  nombre_service: Joi.string().min(3).max(100).required(),
 });
 
 export const unidadMedidaSchema = Joi.object({
